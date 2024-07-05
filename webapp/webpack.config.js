@@ -1,6 +1,7 @@
 // Generated using webpack-cli https://github.com/webpack/webpack-cli
 
 const path = require('path');
+const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyWebpackPlugin = require("copy-webpack-plugin");
@@ -10,10 +11,9 @@ const isProduction = process.env.NODE_ENV == 'production';
 
 const stylesHandler = MiniCssExtractPlugin.loader;
 
-
-
 const config = {
     entry: './src/index.tsx',
+    devtool: 'source-map',
     output: {
         path: path.resolve(__dirname, 'dist'),
         publicPath: '/',
@@ -22,13 +22,14 @@ const config = {
         sourceMapFilename: '[file].map'
     },
     plugins: [
+        new webpack.LoaderOptionsPlugin({
+            debug: true
+        }),
         new HtmlWebpackPlugin(),
         new MiniCssExtractPlugin(),
         new CopyWebpackPlugin({
             patterns: [{from: "src/public", to: "."}]
         }),
-        // Add your plugins here
-        // Learn more about plugins from https://webpack.js.org/configuration/plugins/
     ],
     module: {
         rules: [

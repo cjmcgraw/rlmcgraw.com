@@ -5,7 +5,10 @@ services:
     ports:
       - 8080:8080
     volumes:
-      - ./webapp/src:/workdir/src
+      - ./webapp:/workdir
+      - /workdir/node_modules
+    environment:
+      WATCHPACK_POLLING: true
 
   database:
     build: ./database

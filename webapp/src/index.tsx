@@ -1,13 +1,24 @@
 import { AppBar, Box, Container } from '@mui/material';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom/client';
 import SiteAppBar from './components/SiteAppBar';
 
+const darkTheme = createTheme({
+    palette: {
+        mode: 'dark',
+    }
+})
+
 export default function App() {
     return (
-        <Container>
-            <SiteAppBar/>
-        </Container>
+        <ThemeProvider theme={darkTheme}>
+            <CssBaseline />
+            <Container>
+                <SiteAppBar/>
+            </Container>
+        </ThemeProvider>
     );
 }
 

@@ -10,9 +10,9 @@ build_continuously() {
     while true; do
         counter=$(($counter + 1));
         echo "running attempts=${counter}";
-        sleep 1000
         npm run watch;
         echo "unexpectedly failed!";
+        sleep 5;
     done
 }
 build_continuously &

@@ -34,6 +34,7 @@ RUN find / -type f -name '*nvm.sh*'
 
 COPY . .
 RUN nvm install && nvm use && nvm alias default $(nvm current)
+RUN npm config set loglevel verbose
 RUN npm ci
 RUN npm run build
 ENTRYPOINT ["/bin/bash", "--login", "-eu", "-c", "./dev-entrypoint.sh"]
