@@ -3,11 +3,11 @@
     "allowSyntheticDefaultImports": true,
     "jsx": "react",
     "outDir": "./dist",
-    "noImplicitAny": true,
+    "noImplicitAny": false,
     "module": "es6",
     "moduleResolution": "node",
-    "target": "es5",
+    "target": "es2022",
     "allowJs": true,
-    "sourceMap": true
+    "sourceMap": true,
   }
 }
