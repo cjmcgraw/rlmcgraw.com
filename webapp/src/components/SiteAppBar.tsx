@@ -1,57 +1,96 @@
-import { AppBar, Box, Divider, Drawer, IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Toolbar } from '@mui/material';
+import { AppBar, Box, Divider, Drawer, IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Toolbar, Typography } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import * as React from 'react';
+import { useNavigate } from 'react-router-dom'
 
 
+export const userItems = {
+    login: (
+        <ListItemIcon>
+            <AccountCircleIcon/>
+        </ListItemIcon>
+    )
+}
 
-export default function SiteAppBar() {
-    //console.log("why you looking dawg?");
+export const navigationItems = {
+    musings: <React.Fragment/>,
+}
+
+
+export default function SiteAppBar({ title }) {
+    const navigate = useNavigate();
     const [open, setOpen] = React.useState(false);
 
+    const userListComponents = Object.entries(userItems)
+        .map(([name, child], idx) => (
+            <ListItem key={`${name}-${idx}`} disablePadding>
+                <ListItemButton 
+                    onClick={() => navigate(`/${name}`)}
+                >
+                    {child}
+                    <ListItemText primary={name} />
+                </ListItemButton>
+            </ListItem>
+        ));
+
+    const navigationListComponents = Object.entries(navigationItems)
+        .map(([name, child], idx) => (
+            <ListItem key={`${name}-${idx}`} disablePadding>
+            <ListItemButton
+                onClick={() => navigate(`/${name}`)}
+            >
+                {child}
+                <ListItemText primary={name}/>
+            </ListItemButton>
+            </ListItem>
+        ));
+
     const DrawerList = (
-        <Box sx={{ width: 250 }} role="presentation" onClick={() => setOpen(false)}>
+        <Box sx={{ width: 250 }} onClick={() => setOpen(false)}>
             <List>
-                {['login'].map((text, index) => (
-                    <ListItem key={text} disablePadding>
-                    <ListItemButton>
-                        {(text !== 'login') ? <div/> :  ( 
-                            <ListItemIcon>
-                                <AccountCircleIcon/>
-                            </ListItemIcon>
-                        )}
-                        <ListItemText primary={text} />
-                    </ListItemButton>
-                    </ListItem>
-                ))}
+                {userListComponents}
             </List>
+
             <Divider />
             <List>
-            {['musings'].map((text, index) => (
-                <ListItem key={text} disablePadding>
-                <ListItemButton>
-                    <ListItemText primary={text} />
-                </ListItemButton>
-                </ListItem>
-            ))}
+                {navigationListComponents}
             </List>
         </Box>
     );
+
+    const titleMaybe = !title
+        ? <React.Fragment />
+        : (
+            <Typography
+                variant='h6'
+                component= 'div'
+            >
+                {title}
+            </Typography>
+        )
 
 
     return (
         <Box>
             <AppBar>
                 <Toolbar>
-                    <IconButton
-                        size='small'
-                        edge="start"
-                        color="inherit"
-                        aria-label="menu"
-                        onClick={() => setOpen(true)}
+                    <Box
+                        display="flex"
+                        justifyContent="center"
+                        alignItems="center"
                     >
-                        <MenuIcon />
-                    </IconButton>
+                        <IconButton
+                            size='small'
+                            edge="start"
+                            color="inherit"
+                            aria-label="menu"
+                            onClick={() => setOpen(true)}
+                        >
+                            <MenuIcon />
+                        </IconButton>
+                        {titleMaybe}
+                    </Box>
                 </Toolbar>
             </AppBar>
             <Drawer open={open} onClose={() => setOpen(false)}>

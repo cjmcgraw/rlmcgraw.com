@@ -1,5 +1,5 @@
 import React from 'react';
-import Box from "@mui/material/Box";
+import { Box, Typography } from "@mui/material";
 
 const randomStr = (Math.random() + 1).toString().substring(14);
 const hellos = [...new Array(100).keys()].map(x => (
@@ -9,7 +9,9 @@ const hellos = [...new Array(100).keys()].map(x => (
 export default function () {
     return (
         <Box>
-            {hellos}
+            <Typography>
+                Hello, World!
+            </Typography>
         </Box>
     )
 
