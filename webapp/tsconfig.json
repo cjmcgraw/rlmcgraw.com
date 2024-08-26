@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
+    "jsx": "react-jsxdev",
     "allowSyntheticDefaultImports": true,
-    "jsx": "react",
     "outDir": "./dist",
     "noImplicitAny": false,
     "module": "es6",
@@ -9,5 +9,13 @@
     "target": "es2022",
     "allowJs": true,
     "sourceMap": true,
+    "plugins": [
+      {
+        "name": "@mdx-js/typescript-plugin"
+      }
+    ]
+  },
+  "mdx": {
+    "checkMdx": true
   }
 }

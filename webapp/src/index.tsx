@@ -1,12 +1,13 @@
-import { AppBar, Box, CircularProgress, Container } from '@mui/material';
+import { Box, CircularProgress, Container } from '@mui/material';
 import { ThemeProvider, createTheme, styled } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom/client';
 import SiteAppBar from './components/SiteAppBar';
-import { BrowserRouter, createBrowserRouter, Router, RouterProvider } from 'react-router-dom';
-import Musings from "./components/Musings";
-import WelcomePage from './components/WelcomePage';
+import { createBrowserRouter, Outlet, Router, RouterProvider } from 'react-router-dom';
+import Musings from "./routes/musings/index";
+import Root from './routes/root';
+import ErrorPage from './routes/error-page';
 
 const darkTheme = createTheme({
     palette: {
@@ -17,51 +18,64 @@ const darkTheme = createTheme({
 const router = createBrowserRouter([
     {
         path: "/",
-        element: <WelcomePage />,
+        element: <App />,
+        errorElement: (
+            <App>
+                <ErrorPage />
+            </App>
+        ),
+        children: [
+            {
+                path: "",
+                element: <Root />
+            },
+            {
+                path: "home",
+                element: <Root />,
+            },
+            {
+                path: "musings",
+                element: <Musings />,
+            }
+        ]
     },
-    {
-        path: "/musings",
-        element: <Musings />,
-    }
 ])
 
 const boxProps = {
     sx: {
         display: 'flex',
         flexDirection: 'column',
+        alignItems: 'center',
         bgcolor: 'background.paper',
         borderRadius: 1,
     }
 }
 
+const childBoxProps = {
+
+}
+
 const Offset = styled('div')(({ theme }) => theme.mixins.toolbar);
 
-export default function App({ defaultTitle, children }) {
-    const router = children?.router;
 
-    const title = router?.basename
-        ? router.basename.split("/")[0].strip()
-        : null;
-
+export default function App(props?) {
     React.useEffect(() => {
-        document.title = title || defaultTitle;
+        document.title = "rlmcgraw"
     }, []);
 
-
     return (
-        <ThemeProvider theme={darkTheme}>
-            <CssBaseline />
-            <Box {...boxProps}>
-                <SiteAppBar title={title} />
-                <Offset />
+        <Box {...boxProps}>
+            <SiteAppBar />
+            <Offset />
 
-                <Container>
-                    {children}
-                </Container>
+            <Box>
+                {props?.children ?? <Outlet/>}
             </Box>
-        </ThemeProvider>
+        </Box>
     );
 }
+
+
 
 document.body.innerHTML = '<div id="app"></div>'
 
@@ -69,13 +83,12 @@ ReactDOM
 .createRoot(document.getElementById('app'))
 .render(
     <React.StrictMode>
-        <BrowserRouter router={router}>
-            <App defaultTitle="rlmcgraw.com">
-                <RouterProvider 
-                    router={router} 
-                    fallbackElement={<CircularProgress />}
-                />
-            </App>
-        </BrowserRouter>
+        <ThemeProvider theme={darkTheme}>
+            <CssBaseline />
+            <RouterProvider 
+                router={router} 
+                fallbackElement={<CircularProgress />}
+            />
+        </ThemeProvider>
     </React.StrictMode>
 );

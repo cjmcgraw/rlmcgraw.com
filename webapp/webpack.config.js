@@ -21,6 +21,13 @@ const config = {
         chunkFilename: '[id].bundle_[chunkhash].js',
         sourceMapFilename: '[file].map'
     },
+    mode: 'development',
+    optimization: {
+        usedExports: true,
+        splitChunks: {
+            chunks: 'all'
+        }
+    },
     plugins: [
         new webpack.LoaderOptionsPlugin({
             debug: true
@@ -33,6 +40,10 @@ const config = {
     ],
     module: {
         rules: [
+            {
+                test: /\.(mdx)$/i,
+                loader: '@mdx-js/loader'
+            },
             {
                 test: /\.(ts|tsx)$/i,
                 loader: 'ts-loader',

@@ -3,15 +3,18 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "build": "rm -rf ./dist && webpack --progress=profile --mode=production --node-env=production",
+    "build": "rm -rf ./dist && webpack --progress=profile --mode=development --node-env=development",
     "build:prod": "webpack --mode=production --node-env=production",
     "watch": "webpack --watch --mode=development --progress=profile"
   },
   "dependencies": {
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
+    "@mdx-js/loader": "^3.0.1",
+    "@mdx-js/react": "^3.0.1",
     "@mui/icons-material": "^5.15.21",
     "@mui/material": "^5.15.21",
+    "@types/mdx": "^2.0.13",
     "@types/react-router-dom": "^5.3.3",
     "npm": "^10.8.2",
     "react": "^18.3.1",
@@ -19,7 +22,7 @@
     "react-router-dom": "^6.25.1"
   },
   "devDependencies": {
-    "@types/react": "^18.3.3",
+    "@types/react": "^18.3.4",
     "@types/react-dom": "^18.3.0",
     "@webpack-cli/generators": "^3.0.7",
     "copy-webpack-plugin": "^12.0.2",

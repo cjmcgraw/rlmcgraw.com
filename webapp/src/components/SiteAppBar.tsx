@@ -1,8 +1,10 @@
 import { AppBar, Box, Divider, Drawer, IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Toolbar, Typography } from '@mui/material';
+import ArticleIcon from '@mui/icons-material/Article';
+import HomeIcon from '@mui/icons-material/Home';
 import MenuIcon from '@mui/icons-material/Menu';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import * as React from 'react';
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 
 export const userItems = {
@@ -14,12 +16,25 @@ export const userItems = {
 }
 
 export const navigationItems = {
-    musings: <React.Fragment/>,
+    home: (
+        <ListItemIcon>
+            <HomeIcon />
+        </ListItemIcon>
+    ),
+    musings: (
+        <ListItemIcon>
+            <ArticleIcon />
+        </ListItemIcon>
+    ),
 }
 
 
-export default function SiteAppBar({ title }) {
+export default function SiteAppBar() {
     const navigate = useNavigate();
+    const location = useLocation();
+    const [title] = location.pathname.split('/').filter(x => x)
+
+
     const [open, setOpen] = React.useState(false);
 
     const userListComponents = Object.entries(userItems)
@@ -59,18 +74,6 @@ export default function SiteAppBar({ title }) {
         </Box>
     );
 
-    const titleMaybe = !title
-        ? <React.Fragment />
-        : (
-            <Typography
-                variant='h6'
-                component= 'div'
-            >
-                {title}
-            </Typography>
-        )
-
-
     return (
         <Box>
             <AppBar>
@@ -89,7 +92,6 @@ export default function SiteAppBar({ title }) {
                         >
                             <MenuIcon />
                         </IconButton>
-                        {titleMaybe}
                     </Box>
                 </Toolbar>
             </AppBar>
