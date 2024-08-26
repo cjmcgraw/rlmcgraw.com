@@ -3,7 +3,7 @@ import { ThemeProvider, createTheme, styled } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom/client';
-import SiteAppBar from './components/SiteAppBar';
+import SiteDrawer from './components/SiteDrawer';
 import { createBrowserRouter, Outlet, Router, RouterProvider } from 'react-router-dom';
 import Musings from "./routes/musings/index";
 import Root from './routes/root';
@@ -65,7 +65,7 @@ export default function App(props?) {
 
     return (
         <Box {...boxProps}>
-            <SiteAppBar />
+            <SiteDrawer />
             <Offset />
 
             <Box>
