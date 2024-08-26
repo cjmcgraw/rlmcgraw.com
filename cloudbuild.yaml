@@ -1,6 +1,6 @@
 steps:
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 'webapp-img', 'webapp']
+    args: ['build', '-t', 'webapp-img', '--target', 'builder', 'webapp']
 timeout: 600s
 options:
   logging: CLOUD_LOGGING_ONLY

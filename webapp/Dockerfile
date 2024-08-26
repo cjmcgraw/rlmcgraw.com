@@ -3,7 +3,7 @@ WORKDIR /build
 
 COPY . .
 RUN npm install
-RUN npm run build
+RUN npm run build:prod
 RUN ls -al dist/
 
 # this is the asset that goes out to production
