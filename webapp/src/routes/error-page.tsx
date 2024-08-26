@@ -1,14 +1,19 @@
 import { useRouteError } from 'react-router-dom';
 import * as React from 'react';
-import { Card, CardHeader, Paper, Typography } from '@mui/material';
+import { Box, Card, CardHeader, Paper, Typography } from '@mui/material';
 
 export default function ErrorPage() {
     const error = useRouteError() as any;
     console.error(error);
 
     return (
-        <Paper>
-            <Card>
+        <Paper
+            sx={{
+                display: "flex",
+                justifyContent: "center"
+            }}
+        >
+            <Box>
                 <Typography variant="h2">
                     Oops!
                 </Typography>
@@ -18,7 +23,7 @@ export default function ErrorPage() {
                 <Typography variant="caption">
                     <i>{error.statusText || error.mesage}</i>
                 </Typography>
-            </Card>
+            </Box>
         </Paper>
     )
 }

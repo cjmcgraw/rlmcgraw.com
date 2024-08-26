@@ -68,7 +68,14 @@ export default function App(props?) {
             <SiteDrawer />
             <Offset />
 
-            <Box>
+            <Box
+                sx={{
+                    dispaly: "flex",
+                    alignItems: 'center',
+                    bgcolor: 'background.paper',
+                    borderRadius: theme => theme.spacing(5)
+                }}
+            >
                 {props?.children ?? <Outlet/>}
             </Box>
         </Box>
