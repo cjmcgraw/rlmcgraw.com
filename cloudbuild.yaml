@@ -3,4 +3,4 @@ steps:
     args: ['build', '-t', 'webapp-img', 'webapp']
 timeout: 600s
 options:
-  logging: CLOUD_ONLY_LOGGING
+  logging: CLOUD_LOGGING_ONLY
