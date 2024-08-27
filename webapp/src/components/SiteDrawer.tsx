@@ -8,108 +8,72 @@ import * as React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom'
 import { ChevronLeftRounded } from '@mui/icons-material';
 
-export const userItems = {
-    login: (
-        <ListItemIcon>
-            <AccountCircleIcon/>
-        </ListItemIcon>
-    )
-}
-
-export const navigationItems = {
-    home: (
-        <ListItemIcon>
-            <HomeIcon />
-        </ListItemIcon>
-    ),
-    musings: (
-        <ListItemIcon>
-            <ArticleIcon />
-        </ListItemIcon>
-    ),
-}
-
 
 export default function SiteTray() {
     const navigate = useNavigate();
     const location = useLocation();
-    const [title] = location.pathname.split('/').filter(x => x)
-
-
+    const [width, setWidth] = React.useState(250);
     const [open, setOpen] = React.useState(false);
 
-    const userListComponents = Object.entries(userItems)
-        .map(([name, child], idx) => (
-            <ListItem key={`${name}-${idx}`} disablePadding>
-                <ListItemButton 
-                    onClick={() => navigate(`/${name}`)}
-                >
-                    {child}
-                    <ListItemText primary={name} />
-                </ListItemButton>
-            </ListItem>
-        ));
 
-    const navigationListComponents = Object.entries(navigationItems)
-        .map(([name, child], idx) => (
-            <ListItem key={`${name}-${idx}`} disablePadding>
-            <ListItemButton
-                onClick={() => navigate(`/${name}`)}
-            >
-                {child}
-                <ListItemText primary={name}/>
+    const FloatingMenuButton = () => 
+        open 
+        ? (<React.Fragment />)
+        : (
+        <Fab 
+            variant='circular'
+            aria-label="menu"
+            size='small'
+            sx={{
+                position: "fixed",
+                top: theme => theme.spacing(2),
+                left: theme => theme.spacing(2)
+            }}
+            onClick={() => setOpen(!open)}
+        >
+            <MenuIcon fontSize="inherit" />
+        </Fab>
+    );
+
+    const MyMenuItem = ({name, icon, onClick}) => (
+        <ListItem disablePadding={true}>
+            <ListItemButton onClick={onClick}>
+                {icon}
             </ListItemButton>
-            </ListItem>
-        ));
+            <ListItemText primary={name} />
+        </ListItem>
+    );
 
     return (
         <Box>
-            <Fab 
-                color="secondary" 
-                aria-label="menu"
-                sx={{
-                    position: "fixed",
-                    bottom: theme => theme.spacing(2),
-                    left: theme => theme.spacing(2),
-                }}
-                onClick={() => setOpen(!open)}
-            >
-                <MenuIcon />
-            </Fab>
+            <FloatingMenuButton />
             <Drawer 
-                PaperProps={{
-                    sx: {
-                        width: 250,
-                        display: "flex",
-                        flexDirection: "column",
-                        justifyContent: "space-between"
-                    }
-                }}
                 open={open} 
                 onClose={() => setOpen(false)}
             >
-                <Box>
+                <Box sx={{width}}>
                     <List>
-                        {userListComponents}
-                    </List>
 
-                    <Divider />
-                    <List>
-                        {navigationListComponents}
-                    </List>
-                    <Divider />
-                </Box>
-                <Box>
-                    <Divider />
-                    <List>
-                        <ListItem disablePadding>
-                            <ListItemButton onClick={() => setOpen(false)}>
-                                <ListItemIcon>
-                                    <ChevronLeftRounded />
-                                </ListItemIcon>
-                                <ListItemText primary='close' />
-                            </ListItemButton>
-                        </ListItem>
+                        <MyMenuItem 
+                            name='close'
+                            icon={<ChevronLeftRounded />}
+                            onClick={() => setOpen(false)}
+                        />
+                        <Divider />
+
+                        <MyMenuItem
+                            name='login'
+                            icon={<AccountCircleIcon />}
+                            onClick={() => navigate('/login')}
+                        />
+                        <Divider />
+
+
+                        <MyMenuItem
+                            name='musings'
+                            icon={<ArticleIcon />}
+                            onClick={() => navigate('/musings')}
+                        />
                     </List>
                 </Box>
             </Drawer>

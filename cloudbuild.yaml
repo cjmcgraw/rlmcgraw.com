@@ -1,14 +1,18 @@
 steps:
   - name: 'gcr.io/cloud-builders/docker'
-    args:
-      - |
-        build -t webapp-img --target builder webapp \
-        && docker create -it --name my-container webapp-img \
-        && docker cp my-container:/build/dist /build/dist
+    args: 'build -t webapp-img --target builder webapp'
+
+  - name: 'gcr.io/cloud-builders/docker'
+    args: 'docker create -it --name my-contaer webapp-img'
+
+  - name: 'gcr.io/cloud-builders/docker'
+    args: 'docker cp my-container:/build/dist /build/dist'
+
 artifacts:
   objects:
     location: 'gs://rlmcgraw-webapp-files'
     paths: ['/build/dist']
+
 timeout: 600s
 options:
   logging: CLOUD_LOGGING_ONLY
