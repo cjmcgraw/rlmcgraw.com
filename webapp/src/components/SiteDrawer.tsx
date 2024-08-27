@@ -26,8 +26,8 @@ export default function SiteTray() {
             size='small'
             sx={{
                 position: "fixed",
-                top: theme => theme.spacing(2),
-                left: theme => theme.spacing(2)
+                top: theme => theme.spacing(1),
+                left: theme => theme.spacing(1)
             }}
             onClick={() => setOpen(!open)}
         >

@@ -2,7 +2,7 @@ steps:
   - name: 'ubuntu'
     entrypoint: 'bash'
     args:
-      - 'c'
+      - '-c'
       - |
         docker build -t webapp-image --target production webapp 
         && docker create -it --name my-container webapp-img
