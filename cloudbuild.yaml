@@ -1,7 +1,8 @@
 steps:
   - name: 'gcr.io/cloud-builders/docker'
     script: |
-      #! /usr/bin/env bash -eux
+      #! /usr/bin/env bash
+      set -eux
       docker build -t webapp-image --target production webapp
       docker create -it --name my-container webapp-img
       mkdir /build
