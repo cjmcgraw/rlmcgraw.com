@@ -4,8 +4,8 @@ steps:
     args:
       - '-c'
       - |
-        docker build -t webapp-image --target production webapp 
-        && docker create -it --name my-container webapp-img
+        docker build -t webapp-image --target production webapp  \
+        && docker create -it --name my-container webapp-img \
         && docker cp my-container:/build/dist /build/dist
 
 artifacts:
