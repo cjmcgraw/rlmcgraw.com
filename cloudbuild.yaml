@@ -3,10 +3,12 @@ steps:
     script: |
       #! /usr/bin/env bash
       set -eux
-      docker build -t webapp-image --target production webapp
-      docker create -it --name my-container webapp-img
+      tag=$(xxd -l16 -ps /dev/urandom)
+      container=$(xxd -l16 -ps /dev/urandom)
+      docker build -t ${tag} --target production webapp
+      docker create -it --name ${container} ${tag}
       mkdir /build
-      docker cp my-container:/build/dist /build/dist
+      docker cp ${container}:/build/dist /build/dist
       ls -al /build/dist
 
 artifacts:

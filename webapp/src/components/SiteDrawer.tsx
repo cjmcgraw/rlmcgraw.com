@@ -22,7 +22,6 @@ export default function SiteTray() {
         : (
         <Fab 
             variant='circular'
-            aria-label="menu"
             size='small'
             sx={{
                 position: "fixed",
