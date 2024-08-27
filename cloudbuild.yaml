@@ -3,12 +3,12 @@ steps:
     script: |
       #! /usr/bin/env bash
       set -eux
-      tag=$(xxd -l16 -ps /dev/urandom)
+      tag=$$(xxd -l16 -ps /dev/urandom)
       container=$(xxd -l16 -ps /dev/urandom)
-      docker build -t ${tag} --target production webapp
-      docker create -it --name ${container} ${tag}
+      docker build -t $${tag} --target production webapp
+      docker create -it --name $${container} $${tag}
       mkdir /build
-      docker cp ${container}:/build/dist /build/dist
+      docker cp $${container}:/build/dist /build/dist
       ls -al /build/dist
 
 artifacts:
