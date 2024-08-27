@@ -3,7 +3,7 @@ steps:
     script: |
       #! /usr/bin/env bash
       set -eux
-      docker build -t the-tag --target production webapp
+      docker build -t the-tag --target builder webapp
       docker create -it --name the-container the-tag
       mkdir /build
       docker cp the-container:/build/dist /build/dist
