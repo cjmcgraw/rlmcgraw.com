@@ -11,7 +11,7 @@ steps:
 artifacts:
   objects:
     location: 'gs://rlmcgraw-webapp-files/latest'
-    paths: ['dist']
+    paths: ['dist/*']
 
 timeout: 600s
 options:
