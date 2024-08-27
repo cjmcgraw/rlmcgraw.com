@@ -5,14 +5,13 @@ steps:
       set -eux
       docker build -t the-tag --target builder webapp
       docker create -it --name the-container the-tag
-      mkdir /build
-      docker cp the-container:/build/dist /build/dist
-      ls -al /build/dist
+      docker cp the-container:/build/dist dist
+      ls -al dist
 
 artifacts:
   objects:
-    location: 'gs://rlmcgraw-webapp-files'
-    paths: ['/build/dist']
+    location: 'gs://rlmcgraw-webapp-files/latest'
+    paths: ['dist']
 
 timeout: 600s
 options:
