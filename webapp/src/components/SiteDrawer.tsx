@@ -1,17 +1,14 @@
-import { AppBar, BottomNavigation, BottomNavigationAction, Box, Button, Divider, Drawer, Fab, IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Toolbar, Typography } from '@mui/material';
+import {  Box, Divider, Drawer, Fab, List, ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
 import ArticleIcon from '@mui/icons-material/Article';
-import HomeIcon from '@mui/icons-material/Home';
 import MenuIcon from '@mui/icons-material/Menu';
-import AddIcon from '@mui/icons-material/Add';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import * as React from 'react';
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { ChevronLeftRounded } from '@mui/icons-material';
 
 
 export default function SiteTray() {
     const navigate = useNavigate();
-    const location = useLocation();
     const [width, setWidth] = React.useState(250);
     const [open, setOpen] = React.useState(false);
 
@@ -35,13 +32,16 @@ export default function SiteTray() {
     );
 
     const MyMenuItem = ({name, icon, onClick}) => (
-        <ListItem disablePadding={true}>
+        <ListItem>
             <ListItemButton onClick={onClick}>
-                {icon}
+                <ListItemIcon>
+                    {icon}
+                </ListItemIcon>
+                <ListItemText primary={name} />
             </ListItemButton>
-            <ListItemText primary={name} />
         </ListItem>
     );
+
 
     return (
         <Box>
@@ -50,8 +50,14 @@ export default function SiteTray() {
                 open={open} 
                 onClose={() => setOpen(false)}
             >
-                <Box sx={{width}}>
-                    <List>
+                <Box width={width}>
+                    <List
+                        sx={{
+                            display: 'flex',
+                            flexDirection: "column",
+                            justifyContent: "space-evenly"
+                        }}
+                    >
 
                         <MyMenuItem 
                             name='close'
