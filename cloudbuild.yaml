@@ -8,6 +8,10 @@ steps:
       docker cp the-container:/build/dist dist
       ls -al dist
 
+  - name: 'gcr.io/cloud-builders/gcloud'
+    script: |
+      #! /usr/bin/env bash
+      set -eux
       # Upload everything except index.html
       gsutil -m cp -r dist/* gs://rlmcgraw-webapp-files/ -x ".*index\.html$"
       
