@@ -26,6 +26,12 @@ steps:
       gsutil -m cp -r ${indices} gs://rlmcgraw-webapp-files/
 
       gsutil ls gs://rlmcgraw-webapp-files/
+
+      # then we are going to invalidate the cach
+      gcloud compute url-maps invalidate-cdn-cache webapp-lb \
+        --path="/" \
+        --path="/index.html" \
+        --global
       
       # Clean up old files
       gsutil -m rsync -r -d dist/ gs://rlmcgraw-webapp-files/
