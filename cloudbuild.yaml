@@ -14,18 +14,16 @@ steps:
       set -eux
       # Upload everything except index.html
 
-      indices=$(find dist -type f -name 'index.html')
-      assets=$(find dist -type f -not -name 'index.html')
+      indices=$(find dist -type f -name 'index.html' | tr '\n' ' ')
+      assets=$(find dist -type f -not -name 'index.html' | tr '\n' ' ')
 
       gsutil ls gs://rlmcgraw-webapp-files/
 
-      echo "copying: ${assets}"
-      gsutil -m cp -r "${assets}" gs://rlmcgraw-webapp-files/
+      gsutil -m cp -r ${assets} gs://rlmcgraw-webapp-files/
 
-      echo "copying: ${indices}"
 
       # Upload index.html last
-      gsutil -m cp -r "${indices}" gs://rlmcgraw-webapp-files/
+      gsutil -m cp -r ${indices} gs://rlmcgraw-webapp-files/
 
       gsutil ls gs://rlmcgraw-webapp-files/
       
