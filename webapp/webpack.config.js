@@ -17,8 +17,8 @@ const config = {
     output: {
         path: path.resolve(__dirname, 'dist'),
         publicPath: '/',
-        filename: '[name].bundle.js',
-        chunkFilename: '[id].bundle_[chunkhash].js',
+        filename: '[name].[contenthash].js',
+        chunkFilename: '[id].[contenthash].js',
         sourceMapFilename: '[file].map'
     },
     mode: 'development',
@@ -75,8 +75,6 @@ const config = {
 module.exports = () => {
     if (isProduction) {
         config.mode = 'production';
-        
-        
     } else {
         config.mode = 'development';
     }

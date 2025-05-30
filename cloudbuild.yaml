@@ -8,10 +8,14 @@ steps:
       docker cp the-container:/build/dist dist
       ls -al dist
 
-artifacts:
-  objects:
-    location: 'gs://rlmcgraw-webapp-files/latest'
-    paths: ['dist/*']
+      # Upload everything except index.html
+      gsutil -m cp -r dist/* gs://rlmcgraw-webapp-files/ -x ".*index\.html$"
+      
+      # Upload index.html last
+      gsutil cp dist/index.html gs://rlmcgraw-webapp-files/
+      
+      # Clean up old files
+      gsutil -m rsync -r -d dist/ gs://rlmcgraw-webapp-files/
 
 timeout: 600s
 options:
