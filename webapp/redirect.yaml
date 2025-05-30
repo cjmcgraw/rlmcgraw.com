@@ -1,4 +1,0 @@
-name: http-redirect
-defaultUrlRedirect:
-  httpsRedirect: true
-  redirectResponseCode: MOVED_PERMANENTLY_DEFAULT

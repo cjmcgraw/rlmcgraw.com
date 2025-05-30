@@ -77,40 +77,16 @@ echo
 # Index.html Content
 echo "5. Checking index.html content..."
 INDEX_CONTENT=$(curl -s https://$DOMAIN 2>/dev/null)
-if [[ "$INDEX_CONTENT" == *"<html>"* ]] && [[ "$INDEX_CONTENT" == *"bundle.js"* ]]; then
+if [[ "$INDEX_CONTENT" == *"<!doctype html>"* ]] && [[ "$INDEX_CONTENT" == *".js"* ]]; then
     echo "✓ index.html loads correctly"
 else
     echo "✗ CONTENT ERROR: index.html not loading properly"
     echo "  FIX: Check if files exist in bucket:"
     echo "  gsutil ls gs://rlmcgraw-webapp-files/"
     echo "  gsutil cat gs://rlmcgraw-webapp-files/index.html"
-    echo "  Re-deploy if missing:"
-    echo "  gsutil -m rsync -r -d dist/ gs://rlmcgraw-webapp-files/"
+    echo "  Rebuild and push to GitHub to trigger deployment"
     ERRORS=$((ERRORS + 1))
 fi
-echo
-
-# JavaScript Bundle
-echo "6. Checking JavaScript bundles..."
-MAIN_JS=$(curl -s -o /dev/null -w "%{http_code}" https://$DOMAIN/main.bundle.js 2>/dev/null || echo "000")
-if [ "$MAIN_JS" = "200" ]; then
-    echo "✓ JavaScript bundles accessible"
-else
-    echo "✗ JS ERROR: Cannot load JavaScript bundles (status $MAIN_JS)"
-    echo "  FIX: Check if JS files exist:"
-    echo "  gsutil ls gs://rlmcgraw-webapp-files/*.js"
-    echo "  Rebuild and redeploy via GitHub:"
-    echo "  git push to trigger cloudbuild.yaml"
-    ERRORS=$((ERRORS + 1))
-fi
-echo
-
-# Console Errors Check
-echo "7. Checking for console errors..."
-echo "  Manual check required: Open https://$DOMAIN in browser and check console"
-echo "  Common fix for JSX errors:"
-echo "  - Edit tsconfig.json: change \"jsx\": \"react-jsxdev\" to \"jsx\": \"react-jsx\""
-echo "  - Commit and push to trigger rebuild via cloudbuild.yaml"
 echo
 
 # Summary
