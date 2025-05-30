@@ -13,8 +13,11 @@ steps:
       #! /usr/bin/env bash
       set -eux
       # Upload everything except index.html
-      gsutil -m cp -r dist/* gs://rlmcgraw-webapp-files/ -x ".*index\.html$"
-      
+
+      assets=$(find dist -type f | grep -v '^./dist/index.html$')
+      echo "copying: ${assets}"
+      gsutil -m cp -r "${assets}" gs://rlmcgraw-webapp-files/
+
       # Upload index.html last
       gsutil cp dist/index.html gs://rlmcgraw-webapp-files/
       
