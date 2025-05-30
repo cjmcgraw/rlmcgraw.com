@@ -14,15 +14,24 @@ steps:
       set -eux
       # Upload everything except index.html
 
-      assets=$(find dist -type f | grep -v '^./dist/index.html$')
+      indices=$(find dist -type f -name 'index.html')
+      assets=$(find dist -type f -not -name 'index.html')
+
+      gsutil ls gs://rlmcgraw-webapp-files/
+
       echo "copying: ${assets}"
       gsutil -m cp -r "${assets}" gs://rlmcgraw-webapp-files/
 
+      echo "copying: ${indices}"
+
       # Upload index.html last
-      gsutil cp dist/index.html gs://rlmcgraw-webapp-files/
+      gsutil -m cp -r "${indices}" gs://rlmcgraw-webapp-files/
+
+      gsutil ls gs://rlmcgraw-webapp-files/
       
       # Clean up old files
       gsutil -m rsync -r -d dist/ gs://rlmcgraw-webapp-files/
+      gsutil ls gs://rlmcgraw-webapp-files/
 
 timeout: 600s
 options:
