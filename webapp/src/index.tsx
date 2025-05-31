@@ -4,9 +4,10 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom/client';
 import SiteDrawer from './components/SiteDrawer';
 import { createBrowserRouter, Outlet, RouterProvider } from 'react-router-dom';
-import Musings from "./routes/musings/index";
+import MusingsIndex from "./routes/musings/index";
 import Login from "./routes/login";
 import ErrorPage from './routes/error-page';
+import { loadMusings } from './utils/musingsLoader';
 
 const darkTheme = createTheme({
     palette: {
@@ -46,6 +47,13 @@ const darkTheme = createTheme({
     },
 });
 
+// Dynamically generate musing routes
+const musings = loadMusings();
+const musingRoutes = musings.map(musing => ({
+    path: musing.path,
+    element: musing.component ? <musing.component /> : null
+}));
+
 const router = createBrowserRouter([
     {
         path: "/",
@@ -58,8 +66,9 @@ const router = createBrowserRouter([
         children: [
             {
                 path: "musings",
-                element: <Musings />,
+                element: <MusingsIndex />,
             },
+            ...musingRoutes,
             {
                 path: "login",
                 element: <Login />,

@@ -15,6 +15,9 @@
       {
         "name": "@mdx-js/typescript-plugin"
       }
+    ],
+    "types": [
+      "webpack-env"
     ]
   },
   "mdx": {
