@@ -1,159 +1,54 @@
-import { Box, CircularProgress, Container, ThemeProvider, createTheme, alpha } from '@mui/material';
-import CssBaseline from '@mui/material/CssBaseline';
-import * as React from 'react';
-import * as ReactDOM from 'react-dom/client';
-import SiteDrawer from './components/SiteDrawer';
-import { createBrowserRouter, Outlet, RouterProvider } from 'react-router-dom';
-import MusingsIndex from "./routes/musings/index";
-import Login from "./routes/login";
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import {
+    createBrowserRouter,
+    RouterProvider,
+} from 'react-router-dom';
+import './index.scss';
+
+// Import all your route components
+import Root from './routes/root';
 import ErrorPage from './routes/error-page';
-import { loadMusings } from './utils/musingsLoader';
-import Welcome from './components/Welcome';
+import Login from './routes/login';
+import About from './routes/about';
+import { default as MusingsIndex, loader as musingsIndexLoader } from './routes/musings/index';
+import { default as AlgorithmsMusings } from './routes/musings/algorithms';
 
-const darkTheme = createTheme({
-    palette: {
-        mode: 'dark',
-        primary: {
-            main: '#60a5fa',
-        },
-        secondary: {
-            main: '#c084fc',
-        },
-        background: {
-            default: '#0a0a0a',
-            paper: '#1a1a1a',
-        },
-    },
-    typography: {
-        fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
-    },
-    shape: {
-        borderRadius: 12,
-    },
-    components: {
-        MuiButton: {
-            styleOverrides: {
-                root: {
-                    textTransform: 'none',
-                },
-            },
-        },
-        MuiPaper: {
-            styleOverrides: {
-                root: {
-                    backgroundImage: 'none',
-                },
-            },
-        },
-    },
-});
-
-// Dynamically generate musing routes
-const musings = loadMusings();
-const musingRoutes = musings.map(musing => ({
-    path: musing.path,
-    element: musing.component ? <musing.component /> : null
-}));
-
+// Create the router with all your routes
 const router = createBrowserRouter([
     {
-        path: "/",
-        element: <App />,
-        errorElement: (
-            <App>
-                <ErrorPage />
-            </App>
-        ),
+        path: '/',
+        element: <Root />,
+        errorElement: <ErrorPage />,
         children: [
             {
-                path: "musings",
-                element: <MusingsIndex />,
+                index: true,  // This shows the Welcome component at the root path
+                element: null, // Root component will show Welcome by default
             },
-            ...musingRoutes,
             {
-                path: "login",
+                path: 'login',
                 element: <Login />,
-            }
-        ]
+            },
+            {
+                path: 'about',
+                element: <About />,
+            },
+            {
+                path: 'musings',
+                element: <MusingsIndex />,
+                loader: musingsIndexLoader,
+            },
+            {
+                path: 'musings/algorithms',
+                element: <AlgorithmsMusings />,
+            },
+        ],
     },
 ]);
 
-
-export default function App({ children }: { children?: React.ReactNode }) {
-    React.useEffect(() => {
-        document.title = "rlmcgraw";
-    }, []);
-
-    console.log(children);
-
-    return (
-        <Box
-            sx={{
-                minHeight: '100vh',
-                background: theme => `linear-gradient(to bottom, ${theme.palette.background.default}, ${alpha(theme.palette.primary.main, 0.02)})`,
-                position: 'relative',
-                overflow: 'hidden',
-                '&::before': {
-                    content: '""',
-                    position: 'absolute',
-                    top: '-50%',
-                    left: '-50%',
-                    width: '200%',
-                    height: '200%',
-                    background: theme => `radial-gradient(circle at 20% 30%, ${alpha(theme.palette.primary.main, 0.05)} 0%, transparent 70%)`,
-                    pointerEvents: 'none',
-                },
-                '&::after': {
-                    content: '""',
-                    position: 'absolute',
-                    bottom: '-50%',
-                    right: '-50%',
-                    width: '200%',
-                    height: '200%',
-                    background: theme => `radial-gradient(circle at 80% 70%, ${alpha(theme.palette.secondary.main, 0.05)} 0%, transparent 70%)`,
-                    pointerEvents: 'none',
-                },
-            }}
-        >
-            <SiteDrawer />
-            
-            <Container 
-                maxWidth="lg" 
-                sx={{ 
-                    position: 'relative',
-                    zIndex: 1,
-                    pt: { xs: 10, md: 12 },
-                    pb: 4,
-                }}
-            >
-                {children ?? <Outlet context={{ theme: darkTheme }} />}
-                {!children && !window.location.pathname.slice(1) && <Welcome />}
-            </Container>
-        </Box>
-    );
-}
-
-document.body.innerHTML = '<div id="app"></div>';
-
-ReactDOM.createRoot(document.getElementById('app')!).render(
+// Mount the app to the DOM
+ReactDOM.createRoot(document.getElementById('root')!).render(
     <React.StrictMode>
-        <ThemeProvider theme={darkTheme}>
-            <CssBaseline />
-            <RouterProvider 
-                router={router} 
-                fallbackElement={
-                    <Box 
-                        sx={{ 
-                            display: 'flex', 
-                            alignItems: 'center', 
-                            justifyContent: 'center', 
-                            minHeight: '100vh' 
-                        }}
-                    >
-                        <CircularProgress />
-                    </Box>
-                }
-            />
-        </ThemeProvider>
+        <RouterProvider router={router} />
     </React.StrictMode>
 );

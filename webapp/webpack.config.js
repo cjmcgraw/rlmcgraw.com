@@ -32,7 +32,12 @@ const config = {
         new webpack.LoaderOptionsPlugin({
             debug: true
         }),
-        new HtmlWebpackPlugin(),
+        new HtmlWebpackPlugin({
+            title: "rlmcgraw",
+            template: "src/index.html",
+            filename: "index.html",
+            inject: 'body',
+        }),
         new MiniCssExtractPlugin(),
         new CopyWebpackPlugin({
             patterns: [{from: "src/public", to: "."}]
