@@ -8,6 +8,7 @@ import {
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import InfoIcon from '@mui/icons-material/Info';
 import ArticleIcon from '@mui/icons-material/Article';
 import { ChevronLeftRounded } from '@mui/icons-material';
 import * as React from 'react';
@@ -94,6 +95,12 @@ export default function SiteDrawer() {
                             name='Login'
                             icon={<AccountCircleIcon />}
                             onClick={() => handleNavigation('/login')}
+                        />
+                        
+                        <DrawerMenuItem
+                            name='About'
+                            icon={<InfoIcon />}
+                            onClick={() => handleNavigation('/about')}
                         />
                         
                         <DrawerMenuItem

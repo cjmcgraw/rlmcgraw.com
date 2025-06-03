@@ -160,7 +160,7 @@ export default function MusingsSection({ onClose }: MusingsSectionProps) {
                         <List dense sx={{ py: 0 }}>
                             {filteredMusings.map((musing) => (
                                 <MusingItem 
-                                    key={musing.path} 
+                                    key={musing.slug} 
                                     musing={musing} 
                                     onClose={onClose}
                                 />

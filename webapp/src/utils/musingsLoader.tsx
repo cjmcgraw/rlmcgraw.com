@@ -3,7 +3,7 @@ export interface MusingMetadata {
     title: string;
     excerpt: string;
     date: string;
-    path: string;
+    slug: string; // Just the filename/slug, not full path
     component?: React.ComponentType;
 }
 
@@ -14,8 +14,8 @@ export const loadMusings = (): MusingMetadata[] => {
     const musings: MusingMetadata[] = [];
     
     musingsContext.keys().forEach((key) => {
-        // Skip index.tsx
-        if (key === './index.tsx') return;
+        // Skip index.tsx and MusingPage.tsx
+        if (key === './index.tsx' || key === './MusingPage.tsx') return;
         
         const module = musingsContext(key);
         const filename = key.replace('./', '').replace('.tsx', '');
@@ -24,7 +24,7 @@ export const loadMusings = (): MusingMetadata[] => {
         if (module.metadata) {
             musings.push({
                 ...module.metadata,
-                path: `/musings/${filename}`,
+                slug: filename, // Store just the slug
                 component: module.default
             });
         }

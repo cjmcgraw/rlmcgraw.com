@@ -20,7 +20,7 @@ export default function MusingPage() {
             try {
                 // Load all musings to find the matching one
                 const musings = loadMusings();
-                const musing = musings.find(m => m.path === `/musings/${slug}`);
+                const musing = musings.find(m => m.slug === slug);
                 
                 if (!musing || !musing.component) {
                     setError(true);

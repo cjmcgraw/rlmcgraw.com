@@ -21,8 +21,8 @@ export default function Musings() {
         }
     }, []);
 
-    const handleMusingClick = (path: string) => {
-        navigate(path);
+    const handleMusingClick = (slug: string) => {
+        navigate(`/musings/${slug}`);
     };
 
     const formatDate = (dateString: string) => {
@@ -77,7 +77,7 @@ export default function Musings() {
             ) : (
                 <Grid container spacing={4}>
                     {musings.map((musing, index) => (
-                        <Grid item xs={12} md={6} lg={4} key={musing.path}>
+                        <Grid item xs={12} md={6} lg={4} key={musing.slug}>
                             <Card
                                 sx={{
                                     height: '100%',
@@ -95,7 +95,7 @@ export default function Musings() {
                                 }}
                             >
                                 <CardActionArea 
-                                    onClick={() => handleMusingClick(musing.path)}
+                                    onClick={() => handleMusingClick(musing.slug)}
                                     sx={{ height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'stretch' }}
                                 >
                                     <CardContent sx={{ flexGrow: 1, p: 3 }}>

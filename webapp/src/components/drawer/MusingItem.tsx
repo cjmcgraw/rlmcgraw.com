@@ -29,7 +29,7 @@ export default function MusingItem({ musing, onClose }: MusingItemProps) {
     };
 
     const handleClick = () => {
-        navigate(musing.path);
+        navigate(`/musings/${musing.slug}`);
         onClose?.();
     };
 

@@ -8,6 +8,7 @@ import { createBrowserRouter, Outlet, Router, RouterProvider } from 'react-route
 import MusingsRoot from "./routes/musings/index";
 import MusingPage from "./routes/musings/MusingPage";
 import Login from "./routes/login";
+import About from "./routes/about";
 import Root from './routes/root';
 import ErrorPage from './routes/error-page';
 
@@ -27,6 +28,10 @@ const router = createBrowserRouter([
             </App>
         ),
         children: [
+            {
+                path: "about",
+                element: <About />,
+            },
             {
                 path: "musings",
                 element: <MusingsRoot />,

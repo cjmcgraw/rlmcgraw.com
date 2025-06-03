@@ -5,8 +5,7 @@ services:
     ports:
       - 8080:8080
     volumes:
-      - ./webapp:/workdir
-      - /workdir/node_modules
+      - ./webapp/src:/workdir/src
     environment:
       WATCHPACK_POLLING: true
 
