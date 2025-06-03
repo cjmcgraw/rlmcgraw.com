@@ -4,7 +4,7 @@ import { ThemeProvider, CssBaseline, Box } from '@mui/material';
 import { theme } from '../theme';
 import SiteDrawer from '../components/SiteDrawer';
 import Welcome from '../components/Welcome';
-import Musings from '../components/musings';
+import Musings from '../components/Musings';
 import SEO from '../components/SEO';
 
 export default function Root() {

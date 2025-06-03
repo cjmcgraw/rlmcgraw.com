@@ -1,107 +1,235 @@
-import { Box, Typography, Paper, Divider, useTheme, alpha } from '@mui/material';
+import { 
+    Typography, 
+    Paper, 
+    Box, 
+    Container,
+    Grid,
+    Card,
+    CardContent,
+    CardActionArea,
+    useTheme,
+    alpha,
+    Chip
+} from '@mui/material';
+import { CalendarToday, Article } from '@mui/icons-material';
 import * as React from 'react';
+import { useNavigate } from 'react-router-dom';
+import { loadMusings, MusingMetadata } from '../../utils/musingsLoader';
 
-// Export metadata for dynamic loading
-export const metadata = {
-    title: 'On Algorithms',
-    excerpt: 'Exploring the beauty of computational thinking and algorithmic design patterns...',
-    date: '2025-05-15'
-};
-
-export default function AlgorithmsMusing() {
+export default function MusingsRoot() {
     const theme = useTheme();
+    const navigate = useNavigate();
+    const [musings, setMusings] = React.useState<MusingMetadata[]>([]);
+    const [loading, setLoading] = React.useState(true);
+
+    React.useEffect(() => {
+        try {
+            const loadedMusings = loadMusings();
+            setMusings(loadedMusings);
+        } catch (error) {
+            console.error('Error loading musings:', error);
+        } finally {
+            setLoading(false);
+        }
+    }, []);
+
+    const handleMusingClick = (path: string) => {
+        navigate(path);
+    };
+
+    const formatDate = (dateString: string) => {
+        return new Date(dateString).toLocaleDateString('en-US', { 
+            year: 'numeric', 
+            month: 'long', 
+            day: 'numeric' 
+        });
+    };
+
+    const getTimeAgo = (dateString: string) => {
+        const now = new Date();
+        const musingDate = new Date(dateString);
+        const diffInDays = Math.floor((now.getTime() - musingDate.getTime()) / (1000 * 60 * 60 * 24));
+        
+        if (diffInDays === 0) return 'Today';
+        if (diffInDays === 1) return 'Yesterday';
+        if (diffInDays < 7) return `${diffInDays} days ago`;
+        if (diffInDays < 30) return `${Math.floor(diffInDays / 7)} weeks ago`;
+        if (diffInDays < 365) return `${Math.floor(diffInDays / 30)} months ago`;
+        return `${Math.floor(diffInDays / 365)} years ago`;
+    };
+
+    if (loading) {
+        return (
+            <Container maxWidth="lg" sx={{ py: 6 }}>
+                <Typography variant="h4" sx={{ mb: 4, textAlign: 'center', color: 'text.secondary' }}>
+                    Loading musings...
+                </Typography>
+            </Container>
+        );
+    }
 
     return (
-        <Paper
-            elevation={0}
-            sx={{
-                p: { xs: 3, md: 4 },
-                backgroundColor: alpha(theme.palette.background.paper, 0.6),
-                backdropFilter: 'blur(10px)',
-                border: `1px solid ${alpha(theme.palette.divider, 0.1)}`,
-                borderRadius: 2,
-            }}
-        >
-            <Typography 
-                variant="h3" 
-                sx={{ 
-                    mb: 2,
-                    fontWeight: 700,
-                    background: `linear-gradient(45deg, ${theme.palette.primary.main}, ${theme.palette.secondary.main})`,
-                    backgroundClip: 'text',
-                    WebkitBackgroundClip: 'text',
-                    WebkitTextFillColor: 'transparent',
-                }}
-            >
-                On Algorithms
-            </Typography>
-            
-            <Typography variant="body2" sx={{ mb: 3, color: 'text.secondary' }}>
-                May 15, 2025
-            </Typography>
-
-            <Divider sx={{ mb: 4, opacity: 0.1 }} />
-
-            <Box sx={{ 
-                '& p': { mb: 3, lineHeight: 1.8 },
-                '& h4': { mt: 4, mb: 2, fontWeight: 600 },
-                '& code': { 
-                    backgroundColor: alpha(theme.palette.primary.main, 0.1),
-                    padding: '2px 6px',
-                    borderRadius: 1,
-                    fontFamily: '"Courier New", monospace',
-                }
-            }}>
-                <Typography variant="body1">
-                    Algorithms are the poetry of computation—elegant expressions of logic that transform abstract problems into concrete solutions. 
-                    In the realm of software engineering, they serve as the fundamental building blocks that determine not just what our programs 
-                    can do, but how efficiently they can do it.
+        <Container maxWidth="lg" sx={{ py: 4 }}>
+            {/* Header */}
+            <Box sx={{ mb: 6, textAlign: 'center' }}>
+                <Typography 
+                    variant="h2" 
+                    sx={{ 
+                        mb: 2,
+                        fontWeight: 700,
+                        background: `linear-gradient(45deg, ${theme.palette.primary.main}, ${theme.palette.secondary.main})`,
+                        backgroundClip: 'text',
+                        WebkitBackgroundClip: 'text',
+                        WebkitTextFillColor: 'transparent',
+                    }}
+                >
+                    All Musings
                 </Typography>
-
-                <Typography variant="h6" component="h4">
-                    The Beauty of Simplicity
+                <Typography variant="h6" sx={{ color: 'text.secondary', maxWidth: 600, mx: 'auto', mb: 2 }}>
+                    A collection of thoughts, ideas, and explorations in technology, algorithms, and software engineering
                 </Typography>
-
-                <Typography variant="body1">
-                    Consider the humble binary search. In just a few lines of code, it embodies a profound insight: by repeatedly halving 
-                    our search space, we can find any element in a sorted array with logarithmic efficiency. This simple observation, 
-                    <code>O(log n)</code> versus <code>O(n)</code>, can mean the difference between milliseconds and minutes in real-world applications.
-                </Typography>
-
-                <Typography variant="h6" component="h4">
-                    Algorithms as Problem-Solving Patterns
-                </Typography>
-
-                <Typography variant="body1">
-                    What fascinates me most about algorithms is how they reveal universal patterns in problem-solving. Dynamic programming 
-                    teaches us to break complex problems into overlapping subproblems. Greedy algorithms show us when local optimization 
-                    leads to global solutions. Divide and conquer demonstrates the power of decomposition.
-                </Typography>
-
-                <Typography variant="body1">
-                    These patterns transcend programming languages and platforms. They're mental models that shape how we approach 
-                    challenges, both in code and in life. Understanding algorithms isn't just about writing faster programs—it's about 
-                    developing a more structured and analytical way of thinking.
-                </Typography>
-
-                <Typography variant="h6" component="h4">
-                    The Human Element
-                </Typography>
-
-                <Typography variant="body1">
-                    Yet algorithms are ultimately human creations, imbued with the creativity and constraints of their designers. 
-                    They reflect our values, our biases, and our understanding of the world. As we delegate more decisions to 
-                    algorithmic systems, it becomes crucial to remember that behind every algorithm is a human choice about what 
-                    to optimize for and what trade-offs to accept.
-                </Typography>
-
-                <Typography variant="body1">
-                    In this age of machine learning and AI, the study of classical algorithms remains more relevant than ever. 
-                    They provide the foundation for understanding computational complexity, the building blocks for more sophisticated 
-                    systems, and perhaps most importantly, a lens through which to examine and critique the automated decisions 
-                    that increasingly shape our world.
-                </Typography>
+                <Chip 
+                    label={`${musings.length} ${musings.length === 1 ? 'musing' : 'musings'}`}
+                    sx={{ 
+                        backgroundColor: alpha(theme.palette.primary.main, 0.1),
+                        color: theme.palette.primary.main,
+                        fontWeight: 500
+                    }}
+                />
             </Box>
-        </Paper>
+
+            {musings.length === 0 ? (
+                <Paper
+                    elevation={0}
+                    sx={{
+                        p: 8,
+                        textAlign: 'center',
+                        backgroundColor: alpha(theme.palette.background.paper, 0.6),
+                        backdropFilter: 'blur(10px)',
+                        border: `1px solid ${alpha(theme.palette.divider, 0.1)}`,
+                        borderRadius: 2,
+                    }}
+                >
+                    <Article sx={{ fontSize: 80, color: 'text.secondary', mb: 3, opacity: 0.5 }} />
+                    <Typography variant="h4" sx={{ mb: 2, color: 'text.secondary' }}>
+                        No musings yet
+                    </Typography>
+                    <Typography variant="body1" sx={{ color: 'text.secondary', maxWidth: 400, mx: 'auto' }}>
+                        This is where thoughts and ideas will be shared. Check back soon for new content exploring 
+                        technology, algorithms, and software engineering concepts.
+                    </Typography>
+                </Paper>
+            ) : (
+                <Grid container spacing={3}>
+                    {musings.map((musing, index) => (
+                        <Grid item xs={12} sm={6} lg={4} key={musing.path}>
+                            <Card
+                                sx={{
+                                    height: '100%',
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    backgroundColor: alpha(theme.palette.background.paper, 0.6),
+                                    backdropFilter: 'blur(10px)',
+                                    border: `1px solid ${alpha(theme.palette.divider, 0.1)}`,
+                                    transition: 'all 0.3s ease-in-out',
+                                    position: 'relative',
+                                    overflow: 'hidden',
+                                    '&:hover': {
+                                        transform: 'translateY(-8px)',
+                                        boxShadow: `0 12px 35px ${alpha(theme.palette.primary.main, 0.2)}`,
+                                        borderColor: alpha(theme.palette.primary.main, 0.4),
+                                        '&::before': {
+                                            opacity: 1,
+                                        }
+                                    },
+                                    '&::before': {
+                                        content: '""',
+                                        position: 'absolute',
+                                        top: 0,
+                                        left: 0,
+                                        right: 0,
+                                        height: 3,
+                                        background: `linear-gradient(90deg, ${theme.palette.primary.main}, ${theme.palette.secondary.main})`,
+                                        opacity: 0,
+                                        transition: 'opacity 0.3s ease-in-out',
+                                    }
+                                }}
+                            >
+                                <CardActionArea 
+                                    onClick={() => handleMusingClick(musing.path)}
+                                    sx={{ 
+                                        height: '100%', 
+                                        display: 'flex', 
+                                        flexDirection: 'column', 
+                                        alignItems: 'stretch',
+                                        p: 0
+                                    }}
+                                >
+                                    <CardContent sx={{ flexGrow: 1, p: 3, pt: 4 }}>
+                                        <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
+                                            <Chip 
+                                                label={getTimeAgo(musing.date)}
+                                                size="small"
+                                                sx={{ 
+                                                    backgroundColor: alpha(theme.palette.secondary.main, 0.1),
+                                                    color: theme.palette.secondary.main,
+                                                    fontSize: '0.7rem',
+                                                    height: 20
+                                                }}
+                                            />
+                                        </Box>
+                                        
+                                        <Typography 
+                                            variant="h6" 
+                                            sx={{ 
+                                                mb: 2, 
+                                                fontWeight: 600,
+                                                color: theme.palette.primary.main,
+                                                lineHeight: 1.3,
+                                                display: '-webkit-box',
+                                                WebkitLineClamp: 2,
+                                                WebkitBoxOrient: 'vertical',
+                                                overflow: 'hidden',
+                                            }}
+                                        >
+                                            {musing.title}
+                                        </Typography>
+                                        
+                                        <Typography 
+                                            variant="body2" 
+                                            sx={{ 
+                                                mb: 3, 
+                                                color: 'text.secondary',
+                                                lineHeight: 1.6,
+                                                display: '-webkit-box',
+                                                WebkitLineClamp: 3,
+                                                WebkitBoxOrient: 'vertical',
+                                                overflow: 'hidden',
+                                            }}
+                                        >
+                                            {musing.excerpt}
+                                        </Typography>
+                                        
+                                        <Box 
+                                            sx={{ 
+                                                display: 'flex', 
+                                                alignItems: 'center', 
+                                                color: 'text.secondary',
+                                                mt: 'auto'
+                                            }}
+                                        >
+                                            <CalendarToday sx={{ fontSize: 14, mr: 1 }} />
+                                            <Typography variant="caption" sx={{ fontSize: '0.75rem' }}>
+                                                {formatDate(musing.date)}
+                                            </Typography>
+                                        </Box>
+                                    </CardContent>
+                                </CardActionArea>
+                            </Card>
+                        </Grid>
+                    ))}
+                </Grid>
+            )}
+        </Container>
     );
 }

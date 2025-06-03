@@ -1,54 +1,103 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import {
-    createBrowserRouter,
-    RouterProvider,
-} from 'react-router-dom';
-import './index.scss';
-
-// Import all your route components
+import { Box, CircularProgress, Container } from '@mui/material';
+import { ThemeProvider, createTheme, styled } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
+import * as React from 'react';
+import * as ReactDOM from 'react-dom/client';
+import SiteDrawer from './components/SiteDrawer';
+import { createBrowserRouter, Outlet, Router, RouterProvider } from 'react-router-dom';
+import MusingsRoot from "./routes/musings/index";
+import MusingPage from "./routes/musings/MusingPage";
+import Login from "./routes/login";
 import Root from './routes/root';
 import ErrorPage from './routes/error-page';
-import Login from './routes/login';
-import About from './routes/about';
-import { default as MusingsIndex, loader as musingsIndexLoader } from './routes/musings/index';
-import { default as AlgorithmsMusings } from './routes/musings/algorithms';
 
-// Create the router with all your routes
+const darkTheme = createTheme({
+    palette: {
+        mode: 'dark',
+    }
+})
+
 const router = createBrowserRouter([
     {
-        path: '/',
-        element: <Root />,
-        errorElement: <ErrorPage />,
+        path: "/",
+        element: <App />,
+        errorElement: (
+            <App>
+                <ErrorPage />
+            </App>
+        ),
         children: [
             {
-                index: true,  // This shows the Welcome component at the root path
-                element: null, // Root component will show Welcome by default
+                path: "musings",
+                element: <MusingsRoot />,
             },
             {
-                path: 'login',
+                path: "musings/:slug",
+                element: <MusingPage />,
+            },
+            {
+                path: "login",
                 element: <Login />,
-            },
-            {
-                path: 'about',
-                element: <About />,
-            },
-            {
-                path: 'musings',
-                element: <MusingsIndex />,
-                loader: musingsIndexLoader,
-            },
-            {
-                path: 'musings/algorithms',
-                element: <AlgorithmsMusings />,
-            },
-        ],
+            }
+        ]
     },
-]);
+])
 
-// Mount the app to the DOM
-ReactDOM.createRoot(document.getElementById('root')!).render(
+const boxProps = {
+    sx: {
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        bgcolor: 'background.paper',
+        borderRadius: 1,
+    }
+}
+
+const childBoxProps = {
+
+}
+
+const Offset = styled('div')(({ theme }) => theme.mixins.toolbar);
+
+
+export default function App(props?) {
+    React.useEffect(() => {
+        document.title = "rlmcgraw"
+    }, []);
+
+    return (
+        <Box {...boxProps}>
+            <SiteDrawer />
+            <Offset />
+
+            <Box
+                sx={{
+                    display: "flex",
+                    alignItems: 'center',
+                    bgcolor: 'background.paper',
+                    borderRadius: theme => theme.spacing(5)
+                }}
+            >
+                {props?.children ?? <Outlet/>}
+            </Box>
+        </Box>
+    );
+}
+
+
+
+document.body.innerHTML = '<div id="app"></div>'
+
+ReactDOM
+.createRoot(document.getElementById('app'))
+.render(
     <React.StrictMode>
-        <RouterProvider router={router} />
+        <ThemeProvider theme={darkTheme}>
+            <CssBaseline />
+            <RouterProvider 
+                router={router} 
+                fallbackElement={<CircularProgress />}
+            />
+        </ThemeProvider>
     </React.StrictMode>
 );

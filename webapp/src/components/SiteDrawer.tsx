@@ -1,284 +1,116 @@
-import { Box, Divider, Drawer, IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Typography, useTheme, alpha, Collapse, TextField, InputAdornment } from '@mui/material';
-import ArticleIcon from '@mui/icons-material/Article';
+import { 
+    Box, 
+    Divider, 
+    Drawer, 
+    Fab,
+    useTheme,
+    alpha
+} from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import HomeIcon from '@mui/icons-material/Home';
-import CloseIcon from '@mui/icons-material/Close';
-import ExpandLessIcon from '@mui/icons-material/ExpandLess';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import CircleIcon from '@mui/icons-material/Circle';
-import SearchIcon from '@mui/icons-material/Search';
+import ArticleIcon from '@mui/icons-material/Article';
+import { ChevronLeftRounded } from '@mui/icons-material';
 import * as React from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
-import { loadMusings, MusingMetadata } from '../utils/musingsLoader';
+import { useNavigate } from 'react-router-dom';
+import { DrawerMenuItem, MusingsSection } from './drawer';
 
 export default function SiteDrawer() {
     const navigate = useNavigate();
-    const location = useLocation();
     const theme = useTheme();
+    const [width] = React.useState(350);
     const [open, setOpen] = React.useState(false);
-    const [musingsOpen, setMusingsOpen] = React.useState(false);
-    const [searchTerm, setSearchTerm] = React.useState('');
-    const [musings, setMusings] = React.useState<MusingMetadata[]>([]);
 
-    React.useEffect(() => {
-        // Load musings dynamically
-        const loadedMusings = loadMusings();
-        setMusings(loadedMusings);
-    }, []);
+    const handleClose = () => setOpen(false);
+    const handleOpen = () => setOpen(true);
 
-    const filteredMusings = musings.filter(musing => 
-        musing.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        musing.excerpt.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+    const handleNavigation = (path: string) => {
+        navigate(path);
+        handleClose();
+    };
 
-    const isActive = (path: string) => location.pathname === path;
-    const isMusingsActive = () => location.pathname.startsWith('/musings');
-
-    return (
-        <>
-            <IconButton
-                aria-label="menu"
-                onClick={() => setOpen(true)}
+    const FloatingMenuButton = () => 
+        open ? null : (
+            <Fab 
+                variant='circular'
+                size='medium'
                 sx={{
-                    position: 'fixed',
-                    top: 16,
-                    left: 16,
+                    position: "fixed",
+                    top: theme => theme.spacing(2),
+                    left: theme => theme.spacing(2),
+                    zIndex: theme.zIndex.drawer + 1,
                     backgroundColor: alpha(theme.palette.background.paper, 0.9),
                     backdropFilter: 'blur(10px)',
-                    zIndex: theme.zIndex.drawer + 2,
+                    border: `1px solid ${alpha(theme.palette.divider, 0.2)}`,
+                    color: theme.palette.text.primary,
+                    boxShadow: `0 4px 20px ${alpha(theme.palette.common.black, 0.3)}`,
+                    transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                     '&:hover': {
-                        backgroundColor: alpha(theme.palette.background.paper, 1),
-                        transform: 'scale(1.05)',
+                        backgroundColor: alpha(theme.palette.primary.main, 0.1),
+                        borderColor: alpha(theme.palette.primary.main, 0.3),
+                        boxShadow: `0 6px 25px ${alpha(theme.palette.primary.main, 0.2)}`,
+                        transform: 'translateY(-2px)',
+                        color: theme.palette.primary.main,
                     },
-                    transition: 'all 0.2s ease-in-out',
-                    display: open ? 'none' : 'flex',
+                    '&:active': {
+                        transform: 'translateY(0px)',
+                        transition: 'all 0.1s cubic-bezier(0.4, 0, 0.2, 1)',
+                    }
                 }}
+                onClick={handleOpen}
             >
-                <MenuIcon />
-            </IconButton>
+                <MenuIcon fontSize="small" />
+            </Fab>
+        );
 
+    return (
+        <Box>
+            <FloatingMenuButton />
             <Drawer 
                 open={open} 
-                onClose={() => setOpen(false)}
+                onClose={handleClose}
                 PaperProps={{
                     sx: {
-                        width: 280,
                         backgroundColor: alpha(theme.palette.background.paper, 0.95),
-                        backdropFilter: 'blur(20px)',
+                        backdropFilter: 'blur(10px)',
+                        borderRight: `1px solid ${alpha(theme.palette.divider, 0.1)}`,
                     }
                 }}
             >
-                <Box sx={{ p: 2, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                    <Typography variant="h6" sx={{ fontWeight: 600 }}>
-                        rlmcgraw
-                    </Typography>
-                    <IconButton onClick={() => setOpen(false)} size="small">
-                        <CloseIcon />
-                    </IconButton>
-                </Box>
-                
-                <Divider sx={{ opacity: 0.1 }} />
-                
-                <List sx={{ px: 1, py: 2 }}>
-                    {/* Login at top */}
-                    <ListItem disablePadding sx={{ mb: 0.5 }}>
-                        <ListItemButton
-                            onClick={() => {
-                                navigate('/login');
-                                setOpen(false);
-                            }}
-                            sx={{
-                                borderRadius: 2,
-                                backgroundColor: isActive('/login') 
-                                    ? alpha(theme.palette.primary.main, 0.12)
-                                    : 'transparent',
-                                '&:hover': {
-                                    backgroundColor: isActive('/login')
-                                        ? alpha(theme.palette.primary.main, 0.16)
-                                        : alpha(theme.palette.action.hover, 0.08),
-                                },
-                            }}
-                        >
-                            <ListItemIcon sx={{ 
-                                minWidth: 40,
-                                color: isActive('/login') 
-                                    ? theme.palette.primary.main 
-                                    : theme.palette.text.secondary 
-                            }}>
-                                <AccountCircleIcon />
-                            </ListItemIcon>
-                            <ListItemText 
-                                primary="Login"
-                                primaryTypographyProps={{
-                                    fontWeight: isActive('/login') ? 600 : 400,
-                                    color: isActive('/login') 
-                                        ? theme.palette.primary.main 
-                                        : theme.palette.text.primary
-                                }}
-                            />
-                        </ListItemButton>
-                    </ListItem>
-
-                    <Divider sx={{ my: 2, opacity: 0.1 }} />
-
-                    {/* Home */}
-                    <ListItem disablePadding sx={{ mb: 0.5 }}>
-                        <ListItemButton
-                            onClick={() => {
-                                navigate('/');
-                                setOpen(false);
-                            }}
-                            sx={{
-                                borderRadius: 2,
-                                backgroundColor: isActive('/') 
-                                    ? alpha(theme.palette.primary.main, 0.12)
-                                    : 'transparent',
-                                '&:hover': {
-                                    backgroundColor: isActive('/')
-                                        ? alpha(theme.palette.primary.main, 0.16)
-                                        : alpha(theme.palette.action.hover, 0.08),
-                                },
-                            }}
-                        >
-                            <ListItemIcon sx={{ 
-                                minWidth: 40,
-                                color: isActive('/') 
-                                    ? theme.palette.primary.main 
-                                    : theme.palette.text.secondary 
-                            }}>
-                                <HomeIcon />
-                            </ListItemIcon>
-                            <ListItemText 
-                                primary="Home"
-                                primaryTypographyProps={{
-                                    fontWeight: isActive('/') ? 600 : 400,
-                                    color: isActive('/') 
-                                        ? theme.palette.primary.main 
-                                        : theme.palette.text.primary
-                                }}
-                            />
-                        </ListItemButton>
-                    </ListItem>
-
-                    {/* Musings with expandable list */}
-                    <ListItem disablePadding sx={{ mb: 0.5, flexDirection: 'column', alignItems: 'stretch' }}>
-                        <ListItemButton
-                            onClick={() => setMusingsOpen(!musingsOpen)}
-                            sx={{
-                                borderRadius: 2,
-                                backgroundColor: isMusingsActive() 
-                                    ? alpha(theme.palette.primary.main, 0.12)
-                                    : 'transparent',
-                                '&:hover': {
-                                    backgroundColor: isMusingsActive()
-                                        ? alpha(theme.palette.primary.main, 0.16)
-                                        : alpha(theme.palette.action.hover, 0.08),
-                                },
-                            }}
-                        >
-                            <ListItemIcon sx={{ 
-                                minWidth: 40,
-                                color: isMusingsActive() 
-                                    ? theme.palette.primary.main 
-                                    : theme.palette.text.secondary 
-                            }}>
-                                <ArticleIcon />
-                            </ListItemIcon>
-                            <ListItemText 
-                                primary="Musings"
-                                primaryTypographyProps={{
-                                    fontWeight: isMusingsActive() ? 600 : 400,
-                                    color: isMusingsActive() 
-                                        ? theme.palette.primary.main 
-                                        : theme.palette.text.primary
-                                }}
-                            />
-                            {musingsOpen ? <ExpandLessIcon /> : <ExpandMoreIcon />}
-                        </ListItemButton>
+                <Box width={width} sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+                    {/* Header */}
+                    <Box sx={{ p: 2 }}>
+                        <DrawerMenuItem 
+                            name='Close'
+                            icon={<ChevronLeftRounded />}
+                            onClick={handleClose}
+                        />
+                    </Box>
+                    
+                    <Divider />
+                    
+                    {/* Main Navigation */}
+                    <Box sx={{ px: 2, py: 1 }}>
+                        <DrawerMenuItem
+                            name='Login'
+                            icon={<AccountCircleIcon />}
+                            onClick={() => handleNavigation('/login')}
+                        />
                         
-                        <Collapse in={musingsOpen} timeout="auto" unmountOnExit>
-                            <List component="div" disablePadding sx={{ pl: 2 }}>
-                                <ListItem sx={{ px: 2, pb: 1 }}>
-                                    <TextField
-                                        fullWidth
-                                        size="small"
-                                        placeholder="Search musings..."
-                                        value={searchTerm}
-                                        onChange={(e) => setSearchTerm(e.target.value)}
-                                        InputProps={{
-                                            startAdornment: (
-                                                <InputAdornment position="start">
-                                                    <SearchIcon sx={{ fontSize: 18, color: 'text.secondary' }} />
-                                                </InputAdornment>
-                                            ),
-                                        }}
-                                        sx={{
-                                            '& .MuiOutlinedInput-root': {
-                                                backgroundColor: alpha(theme.palette.background.default, 0.5),
-                                                '& fieldset': {
-                                                    borderColor: alpha(theme.palette.divider, 0.1),
-                                                },
-                                                '&:hover fieldset': {
-                                                    borderColor: alpha(theme.palette.primary.main, 0.3),
-                                                },
-                                            },
-                                        }}
-                                    />
-                                </ListItem>
-                                {filteredMusings.length > 0 ? (
-                                    filteredMusings.map((musing) => (
-                                        <ListItem key={musing.path} disablePadding>
-                                            <ListItemButton
-                                                onClick={() => {
-                                                    navigate(musing.path);
-                                                    setOpen(false);
-                                                    setSearchTerm('');
-                                                }}
-                                                sx={{
-                                                    borderRadius: 2,
-                                                    py: 0.75,
-                                                    backgroundColor: isActive(musing.path) 
-                                                        ? alpha(theme.palette.primary.main, 0.08)
-                                                        : 'transparent',
-                                                    '&:hover': {
-                                                        backgroundColor: alpha(theme.palette.action.hover, 0.08),
-                                                    },
-                                                }}
-                                            >
-                                                <ListItemIcon sx={{ minWidth: 30 }}>
-                                                    <CircleIcon sx={{ fontSize: 8, color: theme.palette.text.secondary }} />
-                                                </ListItemIcon>
-                                                <ListItemText 
-                                                    primary={musing.title}
-                                                    primaryTypographyProps={{
-                                                        fontSize: '0.9rem',
-                                                        fontWeight: isActive(musing.path) ? 500 : 400,
-                                                        color: isActive(musing.path) 
-                                                            ? theme.palette.primary.main 
-                                                            : theme.palette.text.secondary
-                                                    }}
-                                                />
-                                            </ListItemButton>
-                                        </ListItem>
-                                    ))
-                                ) : (
-                                    <ListItem>
-                                        <ListItemText 
-                                            primary="No musings found"
-                                            primaryTypographyProps={{
-                                                fontSize: '0.85rem',
-                                                color: 'text.secondary',
-                                                textAlign: 'center'
-                                            }}
-                                        />
-                                    </ListItem>
-                                )}
-                            </List>
-                        </Collapse>
-                    </ListItem>
-                </List>
+                        <DrawerMenuItem
+                            name='Recent Musings'
+                            icon={<ArticleIcon />}
+                            onClick={() => handleNavigation('/musings')}
+                        />
+                    </Box>
+                    
+                    <Divider />
+                    
+                    {/* Musings Section */}
+                    <Box sx={{ flex: 1, overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
+                        <MusingsSection onClose={handleClose} />
+                    </Box>
+                </Box>
             </Drawer>
-        </>
+        </Box>
     );
 }
