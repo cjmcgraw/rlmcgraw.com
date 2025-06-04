@@ -4,11 +4,9 @@ import CssBaseline from '@mui/material/CssBaseline';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom/client';
 import SiteDrawer from './components/SiteDrawer';
-import { createBrowserRouter, Outlet, Router, RouterProvider } from 'react-router-dom';
-import MusingsRoot from "./routes/musings/index";
+import { createBrowserRouter, Outlet, RouterProvider } from 'react-router-dom';
+import Musings from "./routes/musings/index";
 import MusingPage from "./routes/musings/MusingPage";
-import Login from "./routes/login";
-import About from "./routes/about";
 import Root from './routes/root';
 import ErrorPage from './routes/error-page';
 
@@ -29,20 +27,21 @@ const router = createBrowserRouter([
         ),
         children: [
             {
-                path: "about",
-                element: <About />,
+                index: true,
+                element: <Root />,
             },
             {
                 path: "musings",
-                element: <MusingsRoot />,
-            },
-            {
-                path: "musings/:slug",
-                element: <MusingPage />,
-            },
-            {
-                path: "login",
-                element: <Login />,
+                children: [
+                    {
+                        index: true,
+                        element: <Musings />,
+                    },
+                    {
+                        path: ":slug",
+                        element: <MusingPage />,
+                    }
+                ]
             }
         ]
     },
@@ -58,12 +57,7 @@ const boxProps = {
     }
 }
 
-const childBoxProps = {
-
-}
-
 const Offset = styled('div')(({ theme }) => theme.mixins.toolbar);
-
 
 export default function App(props?) {
     React.useEffect(() => {
@@ -88,8 +82,6 @@ export default function App(props?) {
         </Box>
     );
 }
-
-
 
 document.body.innerHTML = '<div id="app"></div>'
 

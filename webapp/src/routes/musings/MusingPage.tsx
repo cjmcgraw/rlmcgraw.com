@@ -1,7 +1,7 @@
 import { Box, Container, CircularProgress, Typography, Paper } from '@mui/material';
 import * as React from 'react';
 import { useParams, Navigate } from 'react-router-dom';
-import { loadMusings } from '../../utils/musingsLoader';
+import { getMusingBySlug } from '../../utils/musingsLoader';
 
 export default function MusingPage() {
     const { slug } = useParams<{ slug: string }>();
@@ -18,11 +18,11 @@ export default function MusingPage() {
 
         const loadMusing = async () => {
             try {
-                // Load all musings to find the matching one
-                const musings = loadMusings();
-                const musing = musings.find(m => m.slug === slug);
+                // Load the specific musing by slug
+                const musing = getMusingBySlug(slug);
                 
                 if (!musing || !musing.component) {
+                    console.error(`No musing found for slug: ${slug}`);
                     setError(true);
                     setLoading(false);
                     return;

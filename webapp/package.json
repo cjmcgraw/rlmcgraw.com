@@ -17,15 +17,19 @@
     "@types/mdx": "^2.0.13",
     "@types/react-router-dom": "^5.3.3",
     "@types/webpack-env": "^1.18.8",
+    "d3": "^7.9.0",
     "highcharts": "^12.2.0",
     "highcharts-heatmap": "^0.1.7",
     "highcharts-react-official": "^3.2.2",
     "jstat": "^1.9.6",
+    "mathjs": "^14.5.2",
     "npm": "^10.8.2",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-helmet-async": "^2.0.5",
-    "react-router-dom": "^6.25.1"
+    "react-router-dom": "^6.25.1",
+    "recharts": "^2.15.3",
+    "webpack-bundle-analyzer": "^4.10.2"
   },
   "devDependencies": {
     "@types/react": "^18.3.4",
