@@ -6,5 +6,11 @@ declare module 'jstat' {
         sample: (alpha: number, beta: number) => any;
     };
 
+    export const binomial: {
+        pdf: (x: number, alpha: number, beta: number) => any;
+        inv: (p: number, alpha: number, beta: number) => any;
+        sample: (alpha: number, beta: number) => any;
+    };
+
     export default function(x: any): any;
 }
