@@ -26,7 +26,7 @@ export const BinomialLikelihoodCharts: React.FC<BinomialLikelihoodChartsProps> =
 
     const { totalRolls, leftCount, aboveCount } = ballCounts;
 
-    // Generate likelihood data for X position - zoomed around MLE ±5%
+    // Generate likelihood data for X position - zoomed around MLE ±2.5%
     const xDomainMin = Math.max(0, stats.xMLE - 0.05);
     const xDomainMax = Math.min(1, stats.xMLE + 0.05);
     const xLikelihoodData = Array.from({length: 101}, (_, i) => {
@@ -38,9 +38,9 @@ export const BinomialLikelihoodCharts: React.FC<BinomialLikelihoodChartsProps> =
         };
     });
 
-    // Generate likelihood data for Y position - zoomed around MLE ±5%
-    const yDomainMin = Math.max(0, stats.yMLE - 0.05);
-    const yDomainMax = Math.min(1, stats.yMLE + 0.05);
+    // Generate likelihood data for Y position - zoomed around MLE ±2.5%
+    const yDomainMin = Math.max(0, stats.yMLE - 0.025);
+    const yDomainMax = Math.min(1, stats.yMLE + 0.025);
     const yLikelihoodData = Array.from({length: 101}, (_, i) => {
         const p = yDomainMin + (i / 100) * (yDomainMax - yDomainMin);
         const likelihood = jStat.binomial.pdf(aboveCount, totalRolls, p);
@@ -53,7 +53,7 @@ export const BinomialLikelihoodCharts: React.FC<BinomialLikelihoodChartsProps> =
     return (
         <Box sx={{ mb: 3 }}>
             <Typography variant="subtitle2" gutterBottom>
-                Marginal Likelihood Functions (Zoomed ±5% around MLE)
+                Marginal Likelihood Functions (Zoomed ±2.5% around MLE)
             </Typography>
             
             <Box sx={{ mb: 2 }}>
@@ -147,7 +147,7 @@ export const BinomialLikelihoodCharts: React.FC<BinomialLikelihoodChartsProps> =
             </Box>
             
             <Typography variant="caption" color="text.secondary" sx={{ display: 'block', textAlign: 'center' }}>
-                Red dashed line shows Maximum Likelihood Estimate (MLE) - Charts zoomed to ±1% around MLE
+                Red dashed line shows Maximum Likelihood Estimate (MLE) - Charts zoomed to ±2.5% around MLE
                 {showWhiteBall && <><br />White line shows true ball position</>}
             </Typography>
             
