@@ -9,6 +9,8 @@ import Musings from "./routes/musings/index";
 import MusingPage from "./routes/musings/MusingPage";
 import Root from './routes/root';
 import ErrorPage from './routes/error-page';
+import About from './routes/about';  // Add this import
+import Login from './routes/login';  // Add this import
 
 const darkTheme = createTheme({
     palette: {
@@ -29,6 +31,14 @@ const router = createBrowserRouter([
             {
                 index: true,
                 element: <Root />,
+            },
+            {
+                path: "about",          // Add this route
+                element: <About />,
+            },
+            {
+                path: "login",          // Add this route
+                element: <Login />,
             },
             {
                 path: "musings",
