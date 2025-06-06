@@ -3,9 +3,7 @@ import { Outlet, useLocation } from 'react-router-dom';
 import { ThemeProvider, CssBaseline, Box } from '@mui/material';
 import { theme } from '../theme';
 import SiteDrawer from '../components/SiteDrawer';
-import Welcome from '../components/Welcome';
-import Musings from '../components/Musings';
-import SEO from '../components/SEO';
+import LandingPage from '../components/LandingPage';
 
 export default function Root() {
     const location = useLocation();
@@ -16,7 +14,6 @@ export default function Root() {
     return (
         <ThemeProvider theme={theme}>
             <CssBaseline />
-            <SEO />
             <Box sx={{ 
                 minHeight: '100vh', 
                 backgroundColor: theme.palette.background.default,
@@ -28,14 +25,7 @@ export default function Root() {
                 
                 {/* Main Content Area */}
                 <Box component="main" sx={{ flex: 1 }}>
-                    {isHomePage ? (
-                        <>
-                            <Welcome />
-                            <Musings />
-                        </>
-                    ) : (
-                        <Outlet />
-                    )}
+                    {isHomePage ? (<LandingPage />) : (<Outlet />)}
                 </Box>
             </Box>
         </ThemeProvider>

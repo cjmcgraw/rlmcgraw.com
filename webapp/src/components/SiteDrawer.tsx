@@ -59,7 +59,7 @@ export default function SiteDrawer() {
                 }}
                 onClick={handleOpen}
             >
-                <MenuIcon fontSize="small" />
+                {React.createElement(MenuIcon)}
             </Fab>
         );
 
