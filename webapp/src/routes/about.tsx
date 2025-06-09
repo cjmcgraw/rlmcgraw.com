@@ -21,7 +21,8 @@ import {
     Work, 
     Email,
     GitHub,
-    LinkedIn
+    LinkedIn,
+    Memory
 } from '@mui/icons-material';
 import * as React from 'react';
 
@@ -29,32 +30,100 @@ export default function About() {
     const theme = useTheme();
 
     const skills = [
-        { name: 'Machine Learning', level: 90, color: '#ff6b6b' },
-        { name: 'Software Architecture', level: 95, color: '#4ecdc4' },
-        { name: 'Data Science', level: 85, color: '#45b7d1' },
-        { name: 'Algorithm Design', level: 92, color: '#96ceb4' },
-        { name: 'System Design', level: 88, color: '#feca57' },
-        { name: 'Statistical Analysis', level: 87, color: '#ff9ff3' },
+        { name: 'Software Engineering', level: 98, color: '#4ecdc4' },
+        { name: 'Programming', level: 97, color: '#96ceb4' },
+        { name: 'Distributed Computing', level: 93, color: '#45b7d1' },
+        { name: "*nix Ops", level: 77, color: '#a41dcc'},
+        { name: "CI / CD", level: 91, color: '#1eba22' },
+        { name: 'Systems Design', level: 96, color: '#feca57' },
+        { name: 'Bayesian Statistics', level: 91, color: '#ff6b6b' },
+        { name: 'Analytics & Mathematical Modeling', level: 97, color: '#ff9ff3' },
+        { name: 'Frontend Engineering', level: 70, color: '#a8a8a8' },
+        { name: 'Reactive UI', level: 62, color: '#b8b8b8' },
+    ];
+
+    const languages = [
+        { name: 'Python', level: 99, color: '#3776ab' },
+        { name: 'Java', level: 93, color: '#ed8b00' },
+        { name: 'JavaScript/TypeScript', level: 96, color: '#f7df1e' },
+        { name: 'PHP', level: 88, color: '#777bb4' },
+        { name: 'Perl', level: 72, color: '#39457e' },
+        { name: 'SQL', level: 91, color: '#336791' },
+        { name: 'Bash', level: 94, color: '#4eaa25' },
+        { name: 'Rust', level: 65, color: '#ce422b' },
+        { name: 'C++', level: 72, color: '#00599c' },
+        { name: 'C', level: 70, color: '#555555' },
+    ];
+
+    const frameworks = [
+        {
+            category: "Containerization",
+            level: 93,
+            color: '#a41dcc',
+            items: "containers, docker, kubernetes, docker swarm"
+        },
+        {
+            category: 'HTTP Backends',
+            level: 95,
+            color: '#1976d2',
+            items: 'gRPC, WebSockets, FastAPI, Flask, Jetty, Servlets, Koa, Next.js'
+        },
+        {
+            category: 'SQL Databases', 
+            level: 92,
+            color: '#336791',
+            items: 'MySQL, PostgreSQL, BigQuery, OLAP/OLTP'
+        },
+        {
+            category: 'NoSQL',
+            level: 93,
+            color: '#4db33d',
+            items: 'Redis, Elasticsearch, MongoDB, MemSQL'
+        },
+        {
+            category: 'Distributed Queues',
+            level: 90,
+            color: '#ff6b35',
+            items: 'Kafka, RabbitMQ, Redis Streams'
+        },
+        {
+            category: 'Mathematical Frameworks',
+            level: 91,
+            color: '#ff6b6b',
+            items: 'TensorFlow, PyTensor, PyTorch, Theano, PyMC, Stan, R, NumPy, SciPy, Scikit-learn'
+        },
+        {
+            category: 'Blob Storage',
+            level: 82,
+            color: '#f39c12',
+            items: 'S3, Google Cloud Storage, Hadoop HDFS'
+        }
     ];
 
     const experiences = [
         {
-            title: 'Senior Software Engineer',
-            company: 'Tech Innovation Corp',
-            period: '2021 - Present',
-            description: 'Leading development of scalable ML systems and mentoring junior developers.'
+            title: 'Principal Engineer II',
+            company: 'Accretive Technology Group',
+            period: '2015 - Present',
+            description: 'Lead engineering for dynamic marketing and pricing systems plus recommender systems generating approximately $1B annually. Manage a team of ~10 engineers daily, architecting scalable ML solutions at enterprise scale.'
         },
         {
-            title: 'Machine Learning Engineer',
-            company: 'DataCorp Solutions', 
-            period: '2019 - 2021',
-            description: 'Built production ML pipelines processing millions of data points daily.'
+            title: 'ML Systems Consultant',
+            company: 'Stealth Startup', 
+            period: '2012 - 2015',
+            description: 'Specialized in distributed systems and cloud-based ML computation. Designed and implemented scalable machine learning pipelines for high-throughput data processing. Contact me for more details.'
         },
         {
-            title: 'Software Developer',
-            company: 'StartupTech',
-            period: '2017 - 2019',
-            description: 'Full-stack development with focus on data-driven applications.'
+            title: 'Software Engineer & Analyst',
+            company: 'Insurance Sector',
+            period: '2009 - 2012',
+            description: 'Collaborated with actuaries to build predictively powerful mathematical models. Developed risk assessment algorithms and statistical analysis tools. Contact me for more details.'
+        },
+        {
+            title: 'Software Engineering Consultant',
+            company: 'Various Clients',
+            period: '2007 - 2009',
+            description: 'Full-stack development and system architecture consulting across multiple industries. Delivered custom software solutions for diverse business requirements. Contact me for more details.'
         }
     ];
 
@@ -95,19 +164,16 @@ export default function About() {
                 />
                 
                 <Avatar
+                    src="https://lh3.googleusercontent.com/a/ACg8ocJFLQJX230F1TNLshl7r_sWNYbJtc5OVoXT1fArZqWOiuggxwHF=s288-c-no"
+                    alt="Carl McGraw"
                     sx={{
                         width: 120,
                         height: 120,
                         mx: 'auto',
                         mb: 3,
-                        fontSize: '3rem',
-                        backgroundColor: alpha(theme.palette.primary.main, 0.1),
-                        color: theme.palette.primary.main,
                         border: `3px solid ${alpha(theme.palette.primary.main, 0.2)}`
                     }}
-                >
-                    Carl
-                </Avatar>
+                />
 
                 <Typography 
                     variant="h2" 
@@ -124,7 +190,7 @@ export default function About() {
                 </Typography>
 
                 <Typography variant="h5" sx={{ mb: 3, color: 'text.secondary', fontWeight: 300 }}>
-                    Software Engineer & Data Scientist
+                    Principal Engineer & ML Systems Architect
                 </Typography>
 
                 <Box sx={{ mb: 4 }}>
@@ -196,16 +262,96 @@ export default function About() {
                         </Typography>
 
                         <Typography variant="body1" sx={{ mb: 3, lineHeight: 1.8 }}>
-                            When I'm not coding, you'll find me exploring the mathematical foundations of machine learning, 
-                            contributing to open source projects, or writing about the elegant connections between 
-                            statistics, algorithms, and real-world problem solving.
+                            I believe strongly in chaos engineering and have a deep love for Bayesian statistics—not just 
+                            as mathematical curiosities, but as powerful frameworks for learning from data and driving 
+                            iterative processes that create measurable real-world impact. My approach is fundamentally 
+                            empirical: I build systems that can fail gracefully, measure everything that matters, and 
+                            evolve based on evidence rather than assumptions.
                         </Typography>
 
                         <Typography variant="body1" sx={{ mb: 3, lineHeight: 1.8 }}>
-                            I believe the best software solutions come from understanding both the technical constraints 
-                            and the human problems we're trying to solve. Every line of code should tell a story, 
-                            and every algorithm should serve a purpose beyond theoretical elegance.
+                            Empiricism isn't just a preference for me—it's a requirement. I've built my career on the 
+                            principle that measurement is fundamental to engineering excellence. Whether designing 
+                            billion-dollar recommendation systems or debugging distributed failures, I determine success 
+                            and failure from empirical evidence weighted against initial assumptions, then systematically 
+                            update processes based on what actually works versus what we thought would work.
                         </Typography>
+
+                        <Typography variant="body1" sx={{ mb: 3, lineHeight: 1.8 }}>
+                            This methodology has enabled me to deliver value to organizations through a unique combination 
+                            of deep software expertise, mathematical maturity, and data-driven decision making. I don't 
+                            just write code—I build learning systems that get smarter over time, measure their own 
+                            performance, and adapt to changing conditions. Every line of code should tell a story, 
+                            every algorithm should serve a measurable purpose, and every system should teach us something 
+                            about the problem we're solving.
+                        </Typography>
+
+                        {/* Engineering Philosophy */}
+                        <Paper
+                            elevation={0}
+                            sx={{
+                                p: 3,
+                                my: 4,
+                                backgroundColor: alpha(theme.palette.secondary.main, 0.05),
+                                backdropFilter: 'blur(10px)',
+                                border: `1px solid ${alpha(theme.palette.secondary.main, 0.1)}`,
+                                borderRadius: 2,
+                            }}
+                        >
+                            <Typography variant="h5" sx={{ mb: 3, fontWeight: 600, textAlign: 'center' }}>
+                                Engineering Philosophy
+                            </Typography>
+                            
+                            <Grid container spacing={3}>
+                                <Grid item xs={12} md={6}>
+                                    <Box sx={{ textAlign: 'center' }}>
+                                        <TrendingUp sx={{ fontSize: 40, color: theme.palette.secondary.main, mb: 2 }} />
+                                        <Typography variant="h6" sx={{ mb: 2, fontWeight: 600, fontSize: '1rem' }}>
+                                            Empirical Learning
+                                        </Typography>
+                                        <Typography variant="body2" sx={{ lineHeight: 1.6, fontSize: '0.85rem' }}>
+                                            Continuous learning through empirical data and measurable results. Every decision backed by evidence, every system instrumented for learning, every failure converted into actionable insights for improvement.
+                                        </Typography>
+                                    </Box>
+                                </Grid>
+                                
+                                <Grid item xs={12} md={6}>
+                                    <Box sx={{ textAlign: 'center' }}>
+                                        <Psychology sx={{ fontSize: 40, color: theme.palette.secondary.main, mb: 2 }} />
+                                        <Typography variant="h6" sx={{ mb: 2, fontWeight: 600, fontSize: '1rem' }}>
+                                            Chaos Engineering
+                                        </Typography>
+                                        <Typography variant="body2" sx={{ lineHeight: 1.6, fontSize: '0.85rem' }}>
+                                            Building robust production systems that are self-healing and blast tolerant. Intentionally introducing controlled failures to strengthen systems and ensure graceful degradation under real-world chaos.
+                                        </Typography>
+                                    </Box>
+                                </Grid>
+                                
+                                <Grid item xs={12} md={6}>
+                                    <Box sx={{ textAlign: 'center' }}>
+                                        <Code sx={{ fontSize: 40, color: theme.palette.secondary.main, mb: 2 }} />
+                                        <Typography variant="h6" sx={{ mb: 2, fontWeight: 600, fontSize: '1rem' }}>
+                                            Intentional Code
+                                        </Typography>
+                                        <Typography variant="body2" sx={{ lineHeight: 1.6, fontSize: '0.85rem' }}>
+                                            Maintainable, reasonable, and understandable code that clearly handles its intention. Every line serves a purpose, every abstraction earns its place, and every function tells its story with clarity.
+                                        </Typography>
+                                    </Box>
+                                </Grid>
+                                
+                                <Grid item xs={12} md={6}>
+                                    <Box sx={{ textAlign: 'center' }}>
+                                        <Memory sx={{ fontSize: 40, color: theme.palette.secondary.main, mb: 2 }} />
+                                        <Typography variant="h6" sx={{ mb: 2, fontWeight: 600, fontSize: '1rem' }}>
+                                            Adaptive Systems
+                                        </Typography>
+                                        <Typography variant="body2" sx={{ lineHeight: 1.6, fontSize: '0.85rem' }}>
+                                            Systems that use machine learning and data to feed processes in real time without human intervention. Self-optimizing algorithms that continuously adapt to changing conditions and improve performance autonomously.
+                                        </Typography>
+                                    </Box>
+                                </Grid>
+                            </Grid>
+                        </Paper>
 
                         <Divider sx={{ my: 3 }} />
 
@@ -236,6 +382,70 @@ export default function About() {
                                         }
                                     }}
                                 />
+                            </Box>
+                        ))}
+
+                        <Typography variant="h5" sx={{ mb: 3, mt: 4, fontWeight: 600 }}>
+                            Programming Languages
+                        </Typography>
+                        
+                        {languages.map((language, index) => (
+                            <Box key={language.name} sx={{ mb: 2 }}>
+                                <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
+                                    <Typography variant="body2" sx={{ fontWeight: 500 }}>
+                                        {language.name}
+                                    </Typography>
+                                    <Typography variant="body2" color="text.secondary">
+                                        {language.level}%
+                                    </Typography>
+                                </Box>
+                                <LinearProgress
+                                    variant="determinate"
+                                    value={language.level}
+                                    sx={{
+                                        height: 6,
+                                        borderRadius: 3,
+                                        backgroundColor: alpha(language.color, 0.1),
+                                        '& .MuiLinearProgress-bar': {
+                                            backgroundColor: language.color,
+                                            borderRadius: 3,
+                                        }
+                                    }}
+                                />
+                            </Box>
+                        ))}
+
+                        <Typography variant="h5" sx={{ mb: 3, mt: 4, fontWeight: 600 }}>
+                            Frameworks & Technologies
+                        </Typography>
+                        
+                        {frameworks.map((framework, index) => (
+                            <Box key={framework.category} sx={{ mb: 3 }}>
+                                <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
+                                    <Typography variant="body2" sx={{ fontWeight: 600 }}>
+                                        {framework.category}
+                                    </Typography>
+                                    <Typography variant="body2" color="text.secondary">
+                                        {framework.level}%
+                                    </Typography>
+                                </Box>
+                                <LinearProgress
+                                    variant="determinate"
+                                    value={framework.level}
+                                    sx={{
+                                        height: 6,
+                                        borderRadius: 3,
+                                        backgroundColor: alpha(framework.color, 0.1),
+                                        mb: 1,
+                                        '& .MuiLinearProgress-bar': {
+                                            backgroundColor: framework.color,
+                                            borderRadius: 3,
+                                        }
+                                    }}
+                                />
+                                <Typography variant="caption" sx={{ color: 'text.secondary', fontStyle: 'italic' }}>
+                                    {framework.items}
+                                </Typography>
                             </Box>
                         ))}
                     </Paper>
@@ -278,6 +488,50 @@ export default function About() {
                         ))}
                     </Paper>
 
+                    {/* Education */}
+                    <Paper
+                        elevation={0}
+                        sx={{
+                            p: 3,
+                            mb: 4,
+                            backgroundColor: alpha(theme.palette.background.paper, 0.6),
+                            backdropFilter: 'blur(10px)',
+                            border: `1px solid ${alpha(theme.palette.divider, 0.1)}`,
+                            borderRadius: 2,
+                        }}
+                    >
+                        <Typography variant="h5" sx={{ mb: 3, fontWeight: 600, display: 'flex', alignItems: 'center' }}>
+                            <School sx={{ mr: 2, color: theme.palette.primary.main }} />
+                            Education
+                        </Typography>
+                        
+                        <Box sx={{ mb: 2 }}>
+                            <Typography variant="h6" sx={{ fontWeight: 600, mb: 1 }}>
+                                Bachelor's Degree
+                            </Typography>
+                            <Typography variant="body2" sx={{ color: 'primary.main', mb: 1, fontWeight: 500 }}>
+                                University of Washington, Seattle
+                            </Typography>
+                            <Typography variant="body2" sx={{ lineHeight: 1.6, mb: 2 }}>
+                                Focused coursework in probability theory and axiomatic logic, building the mathematical foundations that underpin my approach to software engineering and statistical modeling.
+                            </Typography>
+                            <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap' }}>
+                                <Chip 
+                                    label="Probability Theory" 
+                                    size="small"
+                                    variant="outlined"
+                                    sx={{ backgroundColor: alpha(theme.palette.info.main, 0.05) }}
+                                />
+                                <Chip 
+                                    label="Axiomatic Logic" 
+                                    size="small"
+                                    variant="outlined"
+                                    sx={{ backgroundColor: alpha(theme.palette.secondary.main, 0.05) }}
+                                />
+                            </Box>
+                        </Box>
+                    </Paper>
+
                     {/* Contact */}
                     <Paper
                         elevation={0}
@@ -294,19 +548,60 @@ export default function About() {
                         </Typography>
                         
                         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-                            <Box sx={{ display: 'flex', alignItems: 'center', cursor: 'pointer', p: 1, borderRadius: 1, '&:hover': { backgroundColor: alpha(theme.palette.primary.main, 0.05) } }}>
+                            <Box 
+                                component="a"
+                                href="mailto:contact@rlmcgraw.com"
+                                sx={{ 
+                                    display: 'flex', 
+                                    alignItems: 'center', 
+                                    cursor: 'pointer', 
+                                    p: 1, 
+                                    borderRadius: 1, 
+                                    textDecoration: 'none',
+                                    color: 'inherit',
+                                    '&:hover': { backgroundColor: alpha(theme.palette.primary.main, 0.05) } 
+                                }}
+                            >
                                 <Email sx={{ mr: 2, color: theme.palette.primary.main }} />
                                 <Typography variant="body2">contact@rlmcgraw.com</Typography>
                             </Box>
                             
-                            <Box sx={{ display: 'flex', alignItems: 'center', cursor: 'pointer', p: 1, borderRadius: 1, '&:hover': { backgroundColor: alpha(theme.palette.primary.main, 0.05) } }}>
-                                <a onClick="https://github.com/cjmgraw">
-                                    <GitHub sx={{ mr: 2, color: theme.palette.primary.main }} />
-                                    <Typography variant="body2">github.com/rlmcgraw</Typography>
-                                </a>
+                            <Box 
+                                component="a"
+                                href="https://github.com/cjmcgraw"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                sx={{ 
+                                    display: 'flex', 
+                                    alignItems: 'center', 
+                                    cursor: 'pointer', 
+                                    p: 1, 
+                                    borderRadius: 1, 
+                                    textDecoration: 'none',
+                                    color: 'inherit',
+                                    '&:hover': { backgroundColor: alpha(theme.palette.primary.main, 0.05) } 
+                                }}
+                            >
+                                <GitHub sx={{ mr: 2, color: theme.palette.primary.main }} />
+                                <Typography variant="body2">github.com/cjmcgraw</Typography>
                             </Box>
                             
-                            <Box sx={{ display: 'flex', alignItems: 'center', cursor: 'pointer', p: 1, borderRadius: 1, '&:hover': { backgroundColor: alpha(theme.palette.primary.main, 0.05) } }}>
+                            <Box 
+                                component="a"
+                                href="https://linkedin.com/in/rlmcgraw"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                sx={{ 
+                                    display: 'flex', 
+                                    alignItems: 'center', 
+                                    cursor: 'pointer', 
+                                    p: 1, 
+                                    borderRadius: 1, 
+                                    textDecoration: 'none',
+                                    color: 'inherit',
+                                    '&:hover': { backgroundColor: alpha(theme.palette.primary.main, 0.05) } 
+                                }}
+                            >
                                 <LinkedIn sx={{ mr: 2, color: theme.palette.primary.main }} />
                                 <Typography variant="body2">linkedin.com/in/rlmcgraw</Typography>
                             </Box>
@@ -314,61 +609,6 @@ export default function About() {
                     </Paper>
                 </Grid>
             </Grid>
-
-            {/* Philosophy Section */}
-            <Paper
-                elevation={0}
-                sx={{
-                    p: 4,
-                    mt: 4,
-                    backgroundColor: alpha(theme.palette.secondary.main, 0.05),
-                    backdropFilter: 'blur(10px)',
-                    border: `1px solid ${alpha(theme.palette.secondary.main, 0.1)}`,
-                    borderRadius: 2,
-                }}
-            >
-                <Typography variant="h4" sx={{ mb: 3, fontWeight: 600, textAlign: 'center' }}>
-                    Engineering Philosophy
-                </Typography>
-                
-                <Grid container spacing={3}>
-                    <Grid item xs={12} md={4}>
-                        <Box sx={{ textAlign: 'center' }}>
-                            <Code sx={{ fontSize: 48, color: theme.palette.secondary.main, mb: 2 }} />
-                            <Typography variant="h6" sx={{ mb: 2, fontWeight: 600 }}>
-                                Clean Code
-                            </Typography>
-                            <Typography variant="body2" sx={{ lineHeight: 1.6 }}>
-                                Code should be readable, maintainable, and tell a story. Every function should have a single responsibility, and every abstraction should earn its place.
-                            </Typography>
-                        </Box>
-                    </Grid>
-                    
-                    <Grid item xs={12} md={4}>
-                        <Box sx={{ textAlign: 'center' }}>
-                            <Psychology sx={{ fontSize: 48, color: theme.palette.secondary.main, mb: 2 }} />
-                            <Typography variant="h6" sx={{ mb: 2, fontWeight: 600 }}>
-                                User-Centric Design
-                            </Typography>
-                            <Typography variant="body2" sx={{ lineHeight: 1.6 }}>
-                                Technology exists to solve human problems. The best solutions are invisible to users—they just work, intuitively and reliably.
-                            </Typography>
-                        </Box>
-                    </Grid>
-                    
-                    <Grid item xs={12} md={4}>
-                        <Box sx={{ textAlign: 'center' }}>
-                            <TrendingUp sx={{ fontSize: 48, color: theme.palette.secondary.main, mb: 2 }} />
-                            <Typography variant="h6" sx={{ mb: 2, fontWeight: 600 }}>
-                                Continuous Learning
-                            </Typography>
-                            <Typography variant="body2" sx={{ lineHeight: 1.6 }}>
-                                Technology evolves rapidly, but fundamental principles endure. Stay curious, question assumptions, and never stop learning.
-                            </Typography>
-                        </Box>
-                    </Grid>
-                </Grid>
-            </Paper>
         </Container>
     );
 }
