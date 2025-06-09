@@ -20,9 +20,6 @@ export default function Root() {
                 display: 'flex',
                 flexDirection: 'column'
             }}>
-                {/* Navigation */}
-                <SiteDrawer />
-                
                 {/* Main Content Area */}
                 <Box component="main" sx={{ flex: 1 }}>
                     {isHomePage ? (<LandingPage />) : (<Outlet />)}

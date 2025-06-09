@@ -5,6 +5,7 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom/client';
 import SiteDrawer from './components/SiteDrawer';
 import { createBrowserRouter, Outlet, RouterProvider } from 'react-router-dom';
+import { HelmetProvider } from 'react-helmet-async';
 import Musings from "./routes/musings/index";
 import MusingPage from "./routes/musings/MusingPage";
 import Root from './routes/root';

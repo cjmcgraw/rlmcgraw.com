@@ -25,8 +25,17 @@ export default function SiteDrawer() {
     const [width] = React.useState(380);
     const [open, setOpen] = React.useState(false);
 
-    const handleClose = () => setOpen(false);
-    const handleOpen = () => setOpen(true);
+    const handleClose = () => {
+        console.log('Closing drawer'); // Debug log
+        setOpen(false);
+    };
+    
+    const handleOpen = () => {
+        console.log('Opening drawer, current open state:', open); // Debug log
+        if (!open) {
+            setOpen(true);
+        }
+    };
 
     const handleNavigation = (path: string) => {
         navigate(path);
@@ -34,6 +43,9 @@ export default function SiteDrawer() {
     };
 
     const isActive = (path: string) => location.pathname === path;
+
+    // Debug log to track open state
+    console.log('SiteDrawer render - open state:', open);
 
     const NavigationItem = ({ 
         name, 
