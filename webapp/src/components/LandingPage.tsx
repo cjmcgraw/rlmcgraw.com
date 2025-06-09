@@ -29,7 +29,7 @@ export default function LandingPage() {
             fontStyle: 'italic',
           }}
         >
-          chaos engineering ∩ programming ∩ mathematics ∩ engineering
+          chaos engineering ∩ programming ∩ mathematics
         </Typography>
         
         <Typography
