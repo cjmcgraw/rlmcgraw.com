@@ -300,8 +300,10 @@ export default function About() {
                             </Box>
                             
                             <Box sx={{ display: 'flex', alignItems: 'center', cursor: 'pointer', p: 1, borderRadius: 1, '&:hover': { backgroundColor: alpha(theme.palette.primary.main, 0.05) } }}>
-                                <GitHub sx={{ mr: 2, color: theme.palette.primary.main }} />
-                                <Typography variant="body2">github.com/rlmcgraw</Typography>
+                                <a onClick="https://github.com/cjmgraw">
+                                    <GitHub sx={{ mr: 2, color: theme.palette.primary.main }} />
+                                    <Typography variant="body2">github.com/rlmcgraw</Typography>
+                                </a>
                             </Box>
                             
                             <Box sx={{ display: 'flex', alignItems: 'center', cursor: 'pointer', p: 1, borderRadius: 1, '&:hover': { backgroundColor: alpha(theme.palette.primary.main, 0.05) } }}>

@@ -139,7 +139,7 @@ export const BilliardsTable: React.FC<BilliardsTableProps> = (props) => {
                     <input
                         type="number"
                         value={props.k}
-                        onBlur={(e) => {
+                        onChange={(e) => {
                             const value = Math.max(1, parseInt(e.target.value) || 1);
                             props.setK(value);
                         }}
